@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">Enso</string>
+    <string name="splash_logo">splash_logo</string>
+    <string name="location">Location</string>
+    <string name="locationText">Lakewood, California</string>
+    <string name="cityHint">Search for salons, services...</string>
+    <string name="offerText">Morning Special!</string>
+    <string name="offerTextPercentage">Get 20% Off</string>
+    <string name="book_now">Book Now</string>
+    <string name="services">Services</string>
+    <string name="hair_cut">Hair Cut</string>
+    <string name="hair_styling">Hair Styling</string>
+
+    <string name="search_hint">Search</string>
+    <string name="recent_searches">Recent Searches</string>
+    <string name="no_recent_searches">No recent searches yet.</string>
+
+    <!-- Mock Data for Design -->
+    <string name="loc_1_title">Green Apple</string>
+    <string name="loc_1_sub">54, Lenina Street, Novos...</string>
+    <string name="loc_2_title">Jawed Habib</string>
+    <string name="loc_2_sub">45, Lenina Street, Novos...</string>
+    <string name="loc_3_title">The Galleria</string>
+    <string name="loc_3_sub">12, Pushkina Street, Kazan-420111</string>
+    <string name="loc_4_title">Michael Saldana</string>
+    <string name="loc_4_sub">45, Gagarina Avenue, Yeka...</string>
+    <string name="loc_5_title">Fox And Jane</string>
+    <string name="loc_5_sub">8, Sovetskaya Street, Samara-...</string>
+    <string name="loc_6_title">Butterfly Studio Salon</string>
+    <string name="loc_6_sub">31, Tsentralnaya Street, Krasn...</string>
+    <string name="select_continue">Select &amp; Continue</string>
+    <string name="choose_your_stylist">Choose your stylist</string>
+    <string name="confirm_appointment">Confirm appointment</string>
+    <string name="service">Service</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+    <string name="duration">Duration</string>
+    <string name="add_note">Add note</string>
+    <string name="date_and_time">Date and time</string>
+    <string name="select_date">Select date</string>
+    <string name="select_time">Select time</string>
+    <string name="more_dates">More dates</string>
+</resources>
