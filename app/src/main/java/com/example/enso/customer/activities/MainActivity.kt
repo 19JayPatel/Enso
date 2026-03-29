@@ -1,5 +1,6 @@
 package com.example.enso.customer.activities
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -7,10 +8,12 @@ import com.example.enso.customer.fragments.CalendarFragment
 import com.example.enso.customer.fragments.HeartFragment
 import com.example.enso.customer.fragments.HomeFragment
 import com.example.enso.R
+import com.example.enso.auth.LoginActivity
 import com.example.enso.customer.fragments.ProfileFragment
 import com.example.enso.customer.fragments.SalonDetailsFragment
 import com.example.enso.customer.fragments.SearchFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,6 +28,15 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // 🔥 SESSION CHECK: If user is not logged in, go to LoginActivity
+        if (FirebaseAuth.getInstance().currentUser == null) {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+            return // Stop further execution
+        }
+
         setContentView(R.layout.activity_main)
 
         bottomNav = findViewById(R.id.bottomNav)

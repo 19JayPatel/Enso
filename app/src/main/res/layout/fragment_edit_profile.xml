@@ -155,6 +155,7 @@
                         android:textSize="12sp" />
 
                     <EditText
+                        android:id="@+id/et_first_name"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginTop="8dp"
@@ -162,7 +163,6 @@
                         android:hint="First Name"
                         android:inputType="textPersonName"
                         android:paddingHorizontal="16dp"
-                        android:text="Sarah"
                         android:textColor="@color/black"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -183,6 +183,7 @@
                         android:textSize="12sp" />
 
                     <EditText
+                        android:id="@+id/et_last_name"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginTop="8dp"
@@ -190,7 +191,6 @@
                         android:hint="Last Name"
                         android:inputType="textPersonName"
                         android:paddingHorizontal="16dp"
-                        android:text="Johnson"
                         android:textColor="@color/black"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -206,6 +206,7 @@
                 android:textSize="12sp" />
 
             <EditText
+                android:id="@+id/et_email"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="8dp"
@@ -213,7 +214,6 @@
                 android:hint="Email"
                 android:inputType="textEmailAddress"
                 android:paddingHorizontal="16dp"
-                android:text="sarah.johnson@gmail.com"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
@@ -227,6 +227,7 @@
                 android:textSize="12sp" />
 
             <EditText
+                android:id="@+id/et_phone"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="8dp"
@@ -234,7 +235,6 @@
                 android:hint="Phone"
                 android:inputType="phone"
                 android:paddingHorizontal="16dp"
-                android:text="+1 (310) 555-0192"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
@@ -258,7 +258,6 @@
                 android:clickable="true"
                 android:inputType="none"
                 android:paddingHorizontal="16dp"
-                android:text="March 12, 1995"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
@@ -321,6 +320,7 @@
                 android:textSize="12sp" />
 
             <EditText
+                android:id="@+id/et_location"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="8dp"
@@ -328,7 +328,6 @@
                 android:hint="Location"
                 android:inputType="textPostalAddress"
                 android:paddingHorizontal="16dp"
-                android:text="Lakewood, California"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 

@@ -113,7 +113,8 @@
                         app:strokeColor="@color/primary_brown"
                         app:strokeWidth="1dp" />
 
-                    <!-- Inner Image (88dp as requested) -->
+                    <!-- Inner Image (88dp as requested) - Commented out to use Text Initial -->
+                    <!--
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/iv_profile_main"
                         android:layout_width="88dp"
@@ -121,6 +122,20 @@
                         android:layout_gravity="center"
                         android:src="@drawable/ic_profile_outline"
                         app:shapeAppearanceOverlay="@style/CircleImageView" />
+                    -->
+
+                    <!-- User Initials (Dynamically updated from Kotlin) -->
+                    <TextView
+                        android:id="@+id/tv_profile_initial"
+                        android:layout_width="88dp"
+                        android:layout_height="88dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="J"
+                        android:textColor="@color/primary_brown"
+                        android:textSize="36sp"
+                        android:textStyle="bold"
+                        android:fontFamily="sans-serif-medium" />
 
                     <ImageView
                         android:layout_width="28dp"

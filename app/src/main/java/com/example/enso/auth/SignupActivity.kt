@@ -48,7 +48,7 @@ class SignupActivity : AppCompatActivity() {
             val password = etPassword.text.toString().trim()
             val selectedRoleId = rgUserRole.checkedRadioButtonId
 
-            // 1. Validation: Check if email and password are empty
+            // 1. Validation: Check if fields are empty
             if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
@@ -65,12 +65,16 @@ class SignupActivity : AppCompatActivity() {
                         val role = if (selectedRoleId == R.id.rbCustomer) "customer" else "owner"
                         val status = if (role == "customer") "active" else "pending"
 
-                        // Prepare User Data
+                        // Prepare User Data (🔥 Added default fields for Edit Profile)
                         val userObject = HashMap<String, Any>()
                         userObject["name"] = name
                         userObject["email"] = email
                         userObject["role"] = role
                         userObject["status"] = status
+                        userObject["phone"] = ""
+                        userObject["dob"] = ""
+                        userObject["gender"] = ""
+                        userObject["location"] = ""
                         userObject["createdAt"] = System.currentTimeMillis()
 
                         // 3. Save user data in Realtime Database
@@ -78,7 +82,6 @@ class SignupActivity : AppCompatActivity() {
                             .addOnCompleteListener { dbTask ->
                                 if (dbTask.isSuccessful) {
 
-                                    // ✅ NAVIGATION MUST BE HERE
                                     if (role == "customer") {
                                         // Navigate to MainActivity for customers
                                         val intent = Intent(this, MainActivity::class.java)
@@ -105,7 +108,7 @@ class SignupActivity : AppCompatActivity() {
                             }
 
                     } else {
-                        // 4. Show Toast with error message if task fails
+                        // Show error message if task fails
                         Toast.makeText(this, task.exception?.message, Toast.LENGTH_SHORT).show()
                     }
                 }
