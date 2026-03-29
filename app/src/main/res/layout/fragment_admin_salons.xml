@@ -183,6 +183,7 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                         <TextView
+                            android:id="@+id/tv_initials_ha"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center"
@@ -207,6 +208,7 @@
                         app:layout_constraintTop_toTopOf="@id/card_initials_ha" />
 
                     <TextView
+                        android:id="@+id/tv_owner_ha"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="Owner: James Thompson"
@@ -227,6 +229,7 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                         <TextView
+                            android:id="@+id/tv_status_ha"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingHorizontal="10dp"
@@ -401,6 +404,7 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                         <TextView
+                            android:id="@+id/tv_initials_cs"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center"
@@ -425,6 +429,7 @@
                         app:layout_constraintTop_toTopOf="@id/card_initials_cs" />
 
                     <TextView
+                        android:id="@+id/tv_owner_cs"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="Owner: Priya Sharma"
@@ -445,6 +450,7 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                         <TextView
+                            android:id="@+id/tv_status_cs"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingHorizontal="10dp"
@@ -619,6 +625,7 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                         <TextView
+                            android:id="@+id/tv_initials_gs"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center"
@@ -643,6 +650,7 @@
                         app:layout_constraintTop_toTopOf="@id/card_initials_gs" />
 
                     <TextView
+                        android:id="@+id/tv_owner_gs"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="Owner: Amara Osei"
@@ -663,6 +671,7 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                         <TextView
+                            android:id="@+id/tv_status_gs"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingHorizontal="10dp"
@@ -837,6 +846,7 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                         <TextView
+                            android:id="@+id/tv_initials_pl"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center"
@@ -861,6 +871,7 @@
                         app:layout_constraintTop_toTopOf="@id/card_initials_pl" />
 
                     <TextView
+                        android:id="@+id/tv_owner_pl"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="Owner: Kevin Drake"
@@ -881,6 +892,7 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                         <TextView
+                            android:id="@+id/tv_status_pl"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingHorizontal="10dp"
@@ -1055,6 +1067,7 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                         <TextView
+                            android:id="@+id/tv_initials_vb"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center"
@@ -1079,6 +1092,7 @@
                         app:layout_constraintTop_toTopOf="@id/card_initials_vb" />
 
                     <TextView
+                        android:id="@+id/tv_owner_vb"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="Owner: Sana Mirza"
@@ -1099,6 +1113,7 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                         <TextView
+                            android:id="@+id/tv_status_vb"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingHorizontal="10dp"

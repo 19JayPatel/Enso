@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F8F5F2"
-    android:fillViewport="true">
+    android:orientation="vertical">
 
+    <!-- STICKY HEADER PART (Does not scroll) -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:paddingHorizontal="20dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"> <!-- Added bottom padding to fix overlap -->
 
         <!-- Header -->
         <RelativeLayout
@@ -29,11 +32,12 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/tv_total_members"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@id/tv_title"
                 android:layout_alignParentEnd="true"
-                android:text="3,210 members"
+                android:text="0 members"
                 android:textColor="#8E8E8E"
                 android:textSize="14sp" />
         </RelativeLayout>
@@ -61,9 +65,10 @@
                     android:padding="12dp">
 
                     <TextView
+                        android:id="@+id/tv_summary_total"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="3,210"
+                        android:text="0"
                         android:textColor="#1A1A1A"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -93,9 +98,10 @@
                     android:padding="12dp">
 
                     <TextView
+                        android:id="@+id/tv_summary_active"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="3,104"
+                        android:text="0"
                         android:textColor="#4CAF50"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -125,9 +131,10 @@
                     android:padding="12dp">
 
                     <TextView
+                        android:id="@+id/tv_summary_inactive"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="87"
+                        android:text="0"
                         android:textColor="#A46C54"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -157,9 +164,10 @@
                     android:padding="12dp">
 
                     <TextView
+                        android:id="@+id/tv_summary_banned"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="19"
+                        android:text="0"
                         android:textColor="#F44336"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -197,6 +205,7 @@
                     app:tint="#8E8E8E" />
 
                 <EditText
+                    android:id="@+id/et_search"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
@@ -212,6 +221,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:clipToPadding="false"
             android:scrollbars="none">
 
             <LinearLayout
@@ -226,7 +236,7 @@
                     android:background="@drawable/bg_white_rounded_12"
                     android:backgroundTint="#1A1A1A"
                     android:paddingHorizontal="20dp"
-                    android:paddingVertical="8dp"
+                    android:paddingVertical="10dp"
                     android:text="All"
                     android:textColor="#FFFFFF"
                     android:textStyle="bold" />
@@ -238,7 +248,7 @@
                     android:background="@drawable/bg_white_rounded_12"
                     android:backgroundTint="#FFFFFF"
                     android:paddingHorizontal="20dp"
-                    android:paddingVertical="8dp"
+                    android:paddingVertical="10dp"
                     android:text="Active"
                     android:textColor="#8E8E8E" />
 
@@ -249,7 +259,7 @@
                     android:background="@drawable/bg_white_rounded_12"
                     android:backgroundTint="#FFFFFF"
                     android:paddingHorizontal="20dp"
-                    android:paddingVertical="8dp"
+                    android:paddingVertical="10dp"
                     android:text="Inactive"
                     android:textColor="#8E8E8E" />
 
@@ -259,220 +269,28 @@
                     android:background="@drawable/bg_white_rounded_12"
                     android:backgroundTint="#FFFFFF"
                     android:paddingHorizontal="20dp"
-                    android:paddingVertical="8dp"
+                    android:paddingVertical="10dp"
                     android:text="Banned"
                     android:textColor="#8E8E8E" />
             </LinearLayout>
         </HorizontalScrollView>
+    </LinearLayout>
 
-        <!-- User List Items -->
+    <!-- SCROLLABLE USER LIST PART -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
         <LinearLayout
+            android:id="@+id/ll_user_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingHorizontal="20dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="20dp" />
+    </androidx.core.widget.NestedScrollView>
 
-            <!-- User Item 1 -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="0dp">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="16dp">
-
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/card_avatar"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        app:cardBackgroundColor="#FDEEE7"
-                        app:cardCornerRadius="24dp"
-                        app:cardElevation="0dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:text="SJ"
-                            android:textColor="#A46C54"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-                    </androidx.cardview.widget.CardView>
-
-                    <!-- Right Column for Bookings/Status -->
-                    <LinearLayout
-                        android:id="@+id/layout_right_info"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="end"
-                        android:orientation="vertical"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="12 bookings"
-                            android:textColor="#1A1A1A"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Joined Mar 2024"
-                            android:textColor="#8E8E8E"
-                            android:textSize="11sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
-                            android:background="@drawable/bg_white_rounded_12"
-                            android:backgroundTint="#E7FDF0"
-                            android:paddingHorizontal="10dp"
-                            android:paddingVertical="3dp"
-                            android:text="Active"
-                            android:textColor="#4CAF50"
-                            android:textSize="11sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-
-                    <!-- Middle Column for Name/Email -->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginEnd="12dp"
-                        android:orientation="vertical"
-                        app:layout_constraintEnd_toStartOf="@id/layout_right_info"
-                        app:layout_constraintStart_toEndOf="@id/card_avatar"
-                        app:layout_constraintTop_toTopOf="@id/card_avatar">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Sarah Johnson"
-                            android:textColor="#1A1A1A"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="sarah.johnson@gmail.com"
-                            android:textColor="#8E8E8E"
-                            android:textSize="13sp" />
-                    </LinearLayout>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- User Item 2 -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="0dp">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="16dp">
-
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/card_avatar2"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        app:cardBackgroundColor="#E7F3FD"
-                        app:cardCornerRadius="24dp"
-                        app:cardElevation="0dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:text="MR"
-                            android:textColor="#2196F3"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-                    </androidx.cardview.widget.CardView>
-
-                    <LinearLayout
-                        android:id="@+id/layout_right_info2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="end"
-                        android:orientation="vertical"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="8 bookings"
-                            android:textColor="#1A1A1A"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Joined Jan 2024"
-                            android:textColor="#8E8E8E"
-                            android:textSize="11sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
-                            android:background="@drawable/bg_white_rounded_12"
-                            android:backgroundTint="#E7FDF0"
-                            android:paddingHorizontal="10dp"
-                            android:paddingVertical="3dp"
-                            android:text="Active"
-                            android:textColor="#4CAF50"
-                            android:textSize="11sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginEnd="12dp"
-                        android:orientation="vertical"
-                        app:layout_constraintEnd_toStartOf="@id/layout_right_info2"
-                        app:layout_constraintStart_toEndOf="@id/card_avatar2"
-                        app:layout_constraintTop_toTopOf="@id/card_avatar2">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Mike Rodriguez"
-                            android:textColor="#1A1A1A"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="mike.r@outlook.com"
-                            android:textColor="#8E8E8E"
-                            android:textSize="13sp" />
-                    </LinearLayout>
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-
-        </LinearLayout>
-    </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+</LinearLayout>
