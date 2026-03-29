@@ -66,6 +66,12 @@ class AdminSalonsFragment : Fragment() {
                 if (ownerList.size >= 5) updateCard(ownerList[4], binding.tvSalonNameVb, binding.tvInitialsVb, binding.tvOwnerVb, binding.tvStatusVb)
             }
         }
+
+        // 4. 🔥 CONNECT "ADD NEW SALON" BUTTON
+        binding.btnAddSalon.setOnClickListener {
+            val intent = Intent(requireContext(), AddSalonActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     // Helper function to update UI for a specific card
@@ -79,7 +85,7 @@ class AdminSalonsFragment : Fragment() {
         tvOwner.text = "Owner: $ownerName"
         tvStatus.text = status
 
-        // 4. 🔥 GENERATE INITIALS (Logic: HA, CS...)
+        // 5. 🔥 GENERATE INITIALS (Logic: HA, CS...)
         try {
             val words = salonName.trim().split(" ")
             if (words.size >= 2) {
