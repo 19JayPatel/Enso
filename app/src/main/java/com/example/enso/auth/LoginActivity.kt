@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.toColorInt
 import com.example.enso.customer.activities.MainActivity
 import com.example.enso.R
+import com.example.enso.admin.AdminMainActivity
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -51,9 +52,6 @@ class LoginActivity : AppCompatActivity() {
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        // Success Toast
-                        Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show()
-
                         val userId = auth.currentUser?.uid
                         if (userId != null) {
                             // 3. Fetch user role from Realtime Database
@@ -83,37 +81,37 @@ class LoginActivity : AppCompatActivity() {
                         val role = snapshot.child("role").value.toString()
                         val status = snapshot.child("status").value.toString()
 
-                        // ✅ NAVIGATION LOGIC MUST BE INSIDE SUCCESS BLOCK
-                        if (role == "customer") {
-                            // Customers go to MainActivity
-                            val intent = Intent(this, MainActivity::class.java)
-                            startActivity(intent)
-                            finish()
-                        } else if (role == "owner") {
-                            if (status == "approved") {
-                                // Owners go to Admin Dashboard (Try to find the class dynamically)
-                                try {
-                                    val intent = Intent(
-                                        this,
-                                        Class.forName("com.example.enso.admin.AdminDashboardActivity")
-                                    )
+                        Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show()
+
+                        when (role) {
+                            "admin" -> {
+                                val intent = Intent(this, AdminMainActivity::class.java)
+                                startActivity(intent)
+                                finish()
+                            }
+                            "customer" -> {
+                                val intent = Intent(this, MainActivity::class.java)
+                                startActivity(intent)
+                                finish()
+                            }
+                            "owner" -> {
+                                if (status == "approved") {
+                                    // Owners go to their dashboard (if you have one)
+                                    // For now using AdminMainActivity as placeholder or check if OwnerMainActivity exists
+                                    val intent = Intent(this, AdminMainActivity::class.java)
                                     startActivity(intent)
                                     finish()
-                                } catch (e: Exception) {
+                                } else {
+                                    auth.signOut()
                                     Toast.makeText(
                                         this,
-                                        "Admin Dashboard not found",
-                                        Toast.LENGTH_SHORT
+                                        "Waiting for admin approval",
+                                        Toast.LENGTH_LONG
                                     ).show()
                                 }
-                            } else {
-                                // Owner is not yet approved
-                                auth.signOut()
-                                Toast.makeText(
-                                    this,
-                                    "Waiting for admin approval",
-                                    Toast.LENGTH_LONG
-                                ).show()
+                            }
+                            else -> {
+                                Toast.makeText(this, "Invalid role: $role", Toast.LENGTH_SHORT).show()
                             }
                         }
                     } else {
