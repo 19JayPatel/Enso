@@ -3,137 +3,146 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F7F7F7">
+    android:background="#1A0F0B">
 
-    <!-- Sticky Header (Fixed Top Bar like Dashboard) -->
-    <View
-        android:id="@+id/sticky_header_bg"
+    <!-- STICKY HEADER: Alex Morgan & Profile Info (Stays at top) -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/sticky_profile_header"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="320dp"
         android:background="#1A0F0B"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Profile"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/sticky_header_bg"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/sticky_header_bg" />
+        <ImageView
+            android:id="@+id/iv_edit_profile"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/ic_edit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/white" />
 
-    <ImageView
-        android:id="@+id/iv_edit_header"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginEnd="20dp"
-        android:src="@drawable/ic_edit"
-        app:layout_constraintBottom_toBottomOf="@id/sticky_header_bg"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/sticky_header_bg"
-        app:tint="@color/white" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title">
 
-    <!-- Scrollable Content -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_avatar"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                app:cardBackgroundColor="#A46C54"
+                app:cardCornerRadius="55dp"
+                app:cardElevation="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeColor="#33FFFFFF"
+                app:strokeWidth="1dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="25dp"
+                    android:src="@drawable/ic_profile_outline"
+                    app:tint="@color/white" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                app:cardBackgroundColor="#2D1C16"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:layout_constraintBottom_toBottomOf="@id/card_avatar"
+                app:layout_constraintEnd_toEndOf="@id/card_avatar"
+                app:strokeColor="#1A0F0B"
+                app:strokeWidth="2dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_edit"
+                    app:tint="@color/white" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Alex Morgan"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/card_avatar" />
+
+            <TextView
+                android:id="@+id/tv_badge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_white_rounded_16"
+                android:backgroundTint="#2D1C16"
+                android:paddingHorizontal="18dp"
+                android:paddingVertical="6dp"
+                android:text="Super Admin"
+                android:textColor="#A46C54"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_name" />
+
+            <TextView
+                android:id="@+id/tv_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:alpha="0.7"
+                android:text="alex.morgan@enso.app"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_badge" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- SCROLLABLE LIST: Admin settings and details scroll ABOVE the header -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sticky_header_bg">
+        app:layout_constraintTop_toBottomOf="@id/sticky_profile_header">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="#F7F7F7"
+            android:orientation="vertical"
+            android:paddingTop="16dp"
+            android:paddingBottom="40dp">
 
-            <!-- Brown Background Extension (Holds the Profile Info) -->
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/header_extension"
-                android:layout_width="match_parent"
-                android:layout_height="260dp"
-                android:background="#1A0F0B"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/card_avatar"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_marginTop="10dp"
-                    app:cardBackgroundColor="#A46C54"
-                    app:cardCornerRadius="50dp"
-                    app:cardElevation="0dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:strokeColor="#33FFFFFF"
-                    app:strokeWidth="1dp">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:padding="20dp"
-                        android:src="@drawable/ic_profile_outline"
-                        app:tint="@color/white" />
-                </com.google.android.material.card.MaterialCardView>
-
-                <TextView
-                    android:id="@+id/tv_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:text="Alex Morgan"
-                    android:textColor="@color/white"
-                    android:textSize="22sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/card_avatar" />
-
-                <TextView
-                    android:id="@+id/tv_badge"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/bg_white_rounded_16"
-                    android:backgroundTint="#2D1C16"
-                    android:paddingHorizontal="16dp"
-                    android:paddingVertical="4dp"
-                    android:text="Super Admin"
-                    android:textColor="#A46C54"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_name" />
-
-                <TextView
-                    android:id="@+id/tv_email"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:alpha="0.7"
-                    android:text="alex.morgan@enso.app"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_badge" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <!-- Stats Card (Overlapping like Dashboard) -->
+            <!-- Stats Card (If needed, move inside scroll or keep floating) -->
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/stats_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="-35dp"
+                android:layout_marginTop="12dp"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="16dp"
-                app:cardElevation="4dp"
-                app:layout_constraintTop_toBottomOf="@id/header_extension">
+                app:cardElevation="4dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -253,30 +262,24 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Admin Section -->
             <TextView
-                android:id="@+id/tv_admin_lbl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="24dp"
+                android:layout_marginBottom="12dp"
                 android:text="ADMIN"
                 android:textColor="#8E8E8E"
                 android:textSize="11sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/stats_card" />
+                android:textStyle="bold" />
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/admin_list_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="12dp"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp"
-                app:layout_constraintTop_toBottomOf="@id/tv_admin_lbl"
                 app:strokeColor="#F0F0F0"
                 app:strokeWidth="1dp">
 
@@ -292,7 +295,7 @@
                         android:paddingHorizontal="16dp">
 
                         <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/i1"
+                            android:id="@+id/ic_update_profile"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:layout_centerVertical="true"
@@ -313,8 +316,8 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginStart="16dp"
-                            android:layout_toEndOf="@id/i1"
-                            android:text="Edit Profile"
+                            android:layout_toEndOf="@id/ic_update_profile"
+                            android:text="Update Profile"
                             android:textColor="#1A1A1A"
                             android:textSize="15sp"
                             android:textStyle="bold" />
@@ -340,7 +343,7 @@
                         android:paddingHorizontal="16dp">
 
                         <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/i2"
+                            android:id="@+id/ic_settings"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:layout_centerVertical="true"
@@ -361,7 +364,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginStart="16dp"
-                            android:layout_toEndOf="@id/i2"
+                            android:layout_toEndOf="@id/ic_settings"
                             android:text="Admin Settings"
                             android:textColor="#1A1A1A"
                             android:textSize="15sp"
@@ -388,7 +391,7 @@
                         android:paddingHorizontal="16dp">
 
                         <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/i3"
+                            android:id="@+id/ic_reports"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:layout_centerVertical="true"
@@ -409,7 +412,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginStart="16dp"
-                            android:layout_toEndOf="@id/i3"
+                            android:layout_toEndOf="@id/ic_reports"
                             android:text="Reports &amp; Flags"
                             android:textColor="#F44336"
                             android:textSize="15sp"
@@ -420,7 +423,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="8dp"
-                            android:layout_toStartOf="@+id/arr3"
+                            android:layout_toStartOf="@+id/arr_r"
                             android:background="@drawable/bg_white_rounded_16"
                             android:backgroundTint="#FDF0F0"
                             android:paddingHorizontal="8dp"
@@ -431,7 +434,7 @@
                             android:textStyle="bold" />
 
                         <ImageView
-                            android:id="@+id/arr3"
+                            android:id="@+id/arr_r"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:layout_alignParentEnd="true"
@@ -439,34 +442,27 @@
                             android:alpha="0.2"
                             android:src="@drawable/ic_chevron_right" />
                     </RelativeLayout>
-
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Platform Section -->
             <TextView
-                android:id="@+id/tv_plat_lbl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="24dp"
+                android:layout_marginBottom="12dp"
                 android:text="PLATFORM"
                 android:textColor="#8E8E8E"
                 android:textSize="11sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/admin_list_card" />
+                android:textStyle="bold" />
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/plat_list_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="12dp"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp"
-                app:layout_constraintTop_toBottomOf="@id/tv_plat_lbl"
                 app:strokeColor="#F0F0F0"
                 app:strokeWidth="1dp">
 
@@ -482,7 +478,7 @@
                         android:paddingHorizontal="16dp">
 
                         <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/i4"
+                            android:id="@+id/i_notif"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:layout_centerVertical="true"
@@ -503,7 +499,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginStart="16dp"
-                            android:layout_toEndOf="@id/i4"
+                            android:layout_toEndOf="@id/i_notif"
                             android:text="Push Notifications"
                             android:textColor="#1A1A1A"
                             android:textSize="15sp"
@@ -530,7 +526,7 @@
                         android:paddingHorizontal="16dp">
 
                         <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/i5"
+                            android:id="@+id/i_bill"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:layout_centerVertical="true"
@@ -551,7 +547,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginStart="16dp"
-                            android:layout_toEndOf="@id/i5"
+                            android:layout_toEndOf="@id/i_bill"
                             android:text="Commission &amp; Billing"
                             android:textColor="#1A1A1A"
                             android:textSize="15sp"
@@ -578,7 +574,7 @@
                         android:paddingHorizontal="16dp">
 
                         <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/i6"
+                            android:id="@+id/i_help"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:layout_centerVertical="true"
@@ -599,7 +595,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginStart="16dp"
-                            android:layout_toEndOf="@id/i6"
+                            android:layout_toEndOf="@id/i_help"
                             android:text="Help &amp; Support"
                             android:textColor="#1A1A1A"
                             android:textSize="15sp"
@@ -613,11 +609,9 @@
                             android:alpha="0.2"
                             android:src="@drawable/ic_chevron_right" />
                     </RelativeLayout>
-
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Logout Button -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_logout"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
@@ -634,16 +628,9 @@
                 app:iconGravity="textStart"
                 app:iconPadding="8dp"
                 app:iconTint="#F44336"
-                app:layout_constraintTop_toBottomOf="@id/plat_list_card"
                 app:strokeColor="#F44336"
                 app:strokeWidth="1dp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="24dp"
-                app:layout_constraintTop_toBottomOf="@id/btn_logout" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
