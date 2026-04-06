@@ -2,105 +2,138 @@ package com.example.enso.admin
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.Fragment
-import com.example.enso.auth.LoginActivity
-import com.example.enso.databinding.FragmentAdminSalonsBinding
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.enso.R
+import com.google.firebase.database.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class AdminSalonsFragment : Fragment() {
 
-    private var _binding: FragmentAdminSalonsBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var rvSalons: RecyclerView
+    private lateinit var salonAdapter: SalonAdapter
+    private lateinit var salonList: ArrayList<SalonModel>
+    private lateinit var displayList: ArrayList<SalonModel>
+    
+    private lateinit var tvRegisteredCount: TextView
+    private lateinit var etSearch: EditText
+    private lateinit var btnAddSalon: AppCompatButton
+    
+    private lateinit var filterAll: TextView
+    private lateinit var filterActive: TextView
+    private lateinit var filterPending: TextView
+    private lateinit var filterSuspended: TextView
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        // Initialize View Binding
-        _binding = FragmentAdminSalonsBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    private lateinit var dbRef: DatabaseReference
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = inflater.inflate(R.layout.fragment_admin_salons, container, false)
 
-        // 1. 🔥 ADMIN SESSION CHECK
-        val user = FirebaseAuth.getInstance().currentUser
-        if (user == null) {
-            // Redirect to Log in if session is null
-            val intent = Intent(requireContext(), LoginActivity::class.java)
-            startActivity(intent)
-            activity?.finish()
-            return
+        // Initialize Views
+        rvSalons = view.findViewById(R.id.rv_salons)
+        tvRegisteredCount = view.findViewById(R.id.tv_registered_count)
+        etSearch = view.findViewById(R.id.et_search)
+        btnAddSalon = view.findViewById(R.id.btn_add_salon)
+        
+        filterAll = view.findViewById(R.id.filter_all)
+        filterActive = view.findViewById(R.id.filter_active)
+        filterPending = view.findViewById(R.id.filter_pending)
+        filterSuspended = view.findViewById(R.id.filter_suspended)
+
+        // Setup RecyclerView
+        salonList = ArrayList()
+        displayList = ArrayList()
+        salonAdapter = SalonAdapter(displayList)
+        rvSalons.layoutManager = LinearLayoutManager(requireContext())
+        rvSalons.adapter = salonAdapter
+
+        // Firebase Setup
+        dbRef = FirebaseDatabase.getInstance().getReference("Salons")
+        fetchSalons()
+
+        // Search Logic
+        etSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                filterSearch(s.toString())
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
+        // Filter Click Listeners
+        filterAll.setOnClickListener { updateFilterUI(filterAll); filterByStatus("All") }
+        filterActive.setOnClickListener { updateFilterUI(filterActive); filterByStatus("Active") }
+        filterPending.setOnClickListener { updateFilterUI(filterPending); filterByStatus("Pending") }
+        filterSuspended.setOnClickListener { updateFilterUI(filterSuspended); filterByStatus("Suspended") }
+
+        // Add Salon Button
+        btnAddSalon.setOnClickListener {
+            startActivity(Intent(requireContext(), AddSalonActivity::class.java))
         }
 
-        // 2. 🔥 FETCH ONLY OWNERS FROM FIREBASE REALTIME DATABASE
-        val databaseRef = FirebaseDatabase.getInstance().getReference("Users")
+        return view
+    }
 
-        databaseRef.get().addOnSuccessListener { snapshot ->
-            if (snapshot.exists()) {
-                val ownerList = mutableListOf<Map<String, Any>>()
-
-                // Loop through all users and pick only those with role "owner"
-                for (userSnap in snapshot.children) {
-                    val role = userSnap.child("role").value.toString()
-                    if (role == "owner") {
-                        val data = mutableMapOf<String, Any>()
-                        data["name"] = userSnap.child("name").value.toString()
-                        data["salonName"] = userSnap.child("salonName").value.toString()
-                        data["status"] = userSnap.child("status").value.toString()
-                        ownerList.add(data)
+    private fun fetchSalons() {
+        dbRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                salonList.clear()
+                for (postSnapshot in snapshot.children) {
+                    val salon = postSnapshot.getValue(SalonModel::class.java)
+                    if (salon != null) {
+                        salonList.add(salon)
                     }
                 }
-
-                // 3. 🔥 MAKE DATA DYNAMIC (Map data to the 5 static cards in your XML)
-                if (ownerList.size >= 1) updateCard(ownerList[0], binding.tvSalonNameHa, binding.tvInitialsHa, binding.tvOwnerHa, binding.tvStatusHa)
-                if (ownerList.size >= 2) updateCard(ownerList[1], binding.tvSalonNameCs, binding.tvInitialsCs, binding.tvOwnerCs, binding.tvStatusCs)
-                if (ownerList.size >= 3) updateCard(ownerList[2], binding.tvSalonNameGs, binding.tvInitialsGs, binding.tvOwnerGs, binding.tvStatusGs)
-                if (ownerList.size >= 4) updateCard(ownerList[3], binding.tvSalonNamePl, binding.tvInitialsPl, binding.tvOwnerPl, binding.tvStatusPl)
-                if (ownerList.size >= 5) updateCard(ownerList[4], binding.tvSalonNameVb, binding.tvInitialsVb, binding.tvOwnerVb, binding.tvStatusVb)
+                tvRegisteredCount.text = "${salonList.size} registered"
+                displayList.clear()
+                displayList.addAll(salonList)
+                salonAdapter.notifyDataSetChanged()
             }
-        }
 
-        // 4. 🔥 CONNECT "ADD NEW SALON" BUTTON
-        binding.btnAddSalon.setOnClickListener {
-            val intent = Intent(requireContext(), AddSalonActivity::class.java)
-            startActivity(intent)
+            override fun onCancelled(error: DatabaseError) {}
+        })
+    }
+
+    private fun filterSearch(query: String) {
+        val filtered = salonList.filter {
+            it.salonName?.lowercase(Locale.ROOT)?.contains(query.lowercase(Locale.ROOT)) == true ||
+            it.ownerFirstName?.lowercase(Locale.ROOT)?.contains(query.lowercase(Locale.ROOT)) == true ||
+            it.ownerLastName?.lowercase(Locale.ROOT)?.contains(query.lowercase(Locale.ROOT)) == true
+        }
+        salonAdapter.updateList(filtered)
+    }
+
+    private fun filterByStatus(status: String) {
+        if (status == "All") {
+            salonAdapter.updateList(salonList)
+        } else {
+            val filtered = salonList.filter { it.status == status }
+            salonAdapter.updateList(filtered)
         }
     }
 
-    // Helper function to update UI for a specific card
-    private fun updateCard(ownerData: Map<String, Any>, tvSalon: TextView, tvInitials: TextView, tvOwner: TextView, tvStatus: TextView) {
-        val salonName = ownerData["salonName"].toString()
-        val ownerName = ownerData["name"].toString()
-        val status = ownerData["status"].toString()
-
-        // Set Dynamic Salon and Owner names
-        tvSalon.text = salonName
-        tvOwner.text = "Owner: $ownerName"
-        tvStatus.text = status
-
-        // 5. 🔥 GENERATE INITIALS (Logic: HA, CS...)
-        try {
-            val words = salonName.trim().split(" ")
-            if (words.size >= 2) {
-                val initials = words[0][0].toString() + words[1][0].toString()
-                tvInitials.text = initials.uppercase()
-            } else if (salonName.isNotEmpty()) {
-                tvInitials.text = salonName.take(2).uppercase()
+    private fun updateFilterUI(selected: TextView) {
+        val filters = listOf(filterAll, filterActive, filterPending, filterSuspended)
+        for (f in filters) {
+            if (f == selected) {
+                f.setBackgroundResource(R.drawable.bg_white_rounded_12)
+                f.backgroundTintList = android.content.res.ColorStateList.valueOf(0xFF1A1A1A.toInt())
+                f.setTextColor(android.graphics.Color.WHITE)
+            } else {
+                f.setBackgroundResource(R.drawable.bg_white_rounded_12)
+                f.backgroundTintList = android.content.res.ColorStateList.valueOf(android.graphics.Color.WHITE)
+                f.setTextColor(0xFF8E8E8E.toInt())
             }
-        } catch (e: Exception) {
-            tvInitials.text = "S"
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }
