@@ -23,7 +23,7 @@ class SalonAdapter(private var salonList: List<SalonModel>) :
         val tvBookings: TextView = view.findViewById(R.id.tv_bookings_count)
         val tvServices: TextView = view.findViewById(R.id.tv_services_count)
         val tvRating: TextView = view.findViewById(R.id.tv_rating)
-        
+
         val btnSuspend: TextView = view.findViewById(R.id.btn_suspend)
         val btnAccept: LinearLayout = view.findViewById(R.id.btn_accept)
         val btnReject: LinearLayout = view.findViewById(R.id.btn_reject)
@@ -37,12 +37,12 @@ class SalonAdapter(private var salonList: List<SalonModel>) :
 
     override fun onBindViewHolder(holder: SalonViewHolder, position: Int) {
         val salon = salonList[position]
-        
+
         holder.tvSalonName.text = salon.salonName
         holder.tvOwnerName.text = "Owner: ${salon.ownerFirstName} ${salon.ownerLastName}"
         holder.tvStatus.text = salon.status
         holder.tvInitials.text = salon.salonName?.take(2)?.uppercase() ?: "S"
-        
+
         holder.tvBookings.text = "${salon.bookings ?: 0} bookings"
         holder.tvServices.text = "${salon.services ?: 0} services"
         holder.tvRating.text = "${salon.rating ?: 0.0} ★"
@@ -57,6 +57,7 @@ class SalonAdapter(private var salonList: List<SalonModel>) :
                 holder.btnReject.visibility = View.GONE
                 holder.btnRestore.visibility = View.GONE
             }
+
             "Pending" -> {
                 holder.cardStatus.setCardBackgroundColor(0xFFFDF5E7.toInt())
                 holder.tvStatus.setTextColor(0xFFFF9800.toInt())
@@ -65,6 +66,7 @@ class SalonAdapter(private var salonList: List<SalonModel>) :
                 holder.btnReject.visibility = View.VISIBLE
                 holder.btnRestore.visibility = View.GONE
             }
+
             "Suspended" -> {
                 holder.cardStatus.setCardBackgroundColor(0xFFFEECEB.toInt())
                 holder.tvStatus.setTextColor(0xFFF44336.toInt())
