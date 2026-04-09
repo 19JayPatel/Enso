@@ -1,6 +1,5 @@
 package com.example.enso.admin
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -9,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
-import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -27,7 +25,6 @@ class AdminSalonsFragment : Fragment() {
     
     private lateinit var tvRegisteredCount: TextView
     private lateinit var etSearch: EditText
-    private lateinit var btnAddSalon: AppCompatButton
     
     private lateinit var filterAll: TextView
     private lateinit var filterActive: TextView
@@ -43,7 +40,6 @@ class AdminSalonsFragment : Fragment() {
         rvSalons = view.findViewById(R.id.rv_salons)
         tvRegisteredCount = view.findViewById(R.id.tv_registered_count)
         etSearch = view.findViewById(R.id.et_search)
-        btnAddSalon = view.findViewById(R.id.btn_add_salon)
         
         filterAll = view.findViewById(R.id.filter_all)
         filterActive = view.findViewById(R.id.filter_active)
@@ -76,17 +72,13 @@ class AdminSalonsFragment : Fragment() {
         filterPending.setOnClickListener { updateFilterUI(filterPending); filterByStatus("Pending") }
         filterSuspended.setOnClickListener { updateFilterUI(filterSuspended); filterByStatus("Suspended") }
 
-        // Add Salon Button
-        btnAddSalon.setOnClickListener {
-            startActivity(Intent(requireContext(), AddSalonActivity::class.java))
-        }
-
         return view
     }
 
     private fun fetchSalons() {
         dbRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                if (!isAdded) return
                 salonList.clear()
                 for (postSnapshot in snapshot.children) {
                     val salon = postSnapshot.getValue(SalonModel::class.java)
