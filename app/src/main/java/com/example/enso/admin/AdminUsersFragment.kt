@@ -43,20 +43,20 @@ class AdminUsersFragment : Fragment() {
                         itemView.findViewById<TextView>(R.id.tv_email).text = email
                         itemView.findViewById<TextView>(R.id.tv_status).text = status
                         
-                        val adminActions = itemView.findViewById<LinearLayout>(R.id.admin_actions)
-                        adminActions.visibility = View.VISIBLE
-
-                        itemView.findViewById<View>(R.id.btn_accept).setOnClickListener {
-                            val updates = HashMap<String, Any>()
-                            updates["status"] = "approved"
-                            database.child(userId!!).updateChildren(updates)
-                        }
-
-                        itemView.findViewById<View>(R.id.btn_reject).setOnClickListener {
-                            val updates = HashMap<String, Any>()
-                            updates["status"] = "rejected"
-                            database.child(userId!!).updateChildren(updates)
-                        }
+//                        val adminActions = itemView.findViewById<LinearLayout>(R.id.admin_actions)
+//                        adminActions.visibility = View.VISIBLE
+//
+//                        itemView.findViewById<View>(R.id.btn_accept).setOnClickListener {
+//                            val updates = HashMap<String, Any>()
+//                            updates["status"] = "approved"
+//                            database.child(userId!!).updateChildren(updates)
+//                        }
+//
+//                        itemView.findViewById<View>(R.id.btn_reject).setOnClickListener {
+//                            val updates = HashMap<String, Any>()
+//                            updates["status"] = "rejected"
+//                            database.child(userId!!).updateChildren(updates)
+//                        }
 
                         llUserList.addView(itemView)
                     }
