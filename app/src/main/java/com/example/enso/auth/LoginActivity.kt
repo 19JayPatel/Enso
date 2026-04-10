@@ -89,11 +89,13 @@ class LoginActivity : AppCompatActivity() {
                                 startActivity(intent)
                                 finish()
                             }
+
                             "customer" -> {
                                 val intent = Intent(this, MainActivity::class.java)
                                 startActivity(intent)
                                 finish()
                             }
+
                             "owner" -> {
                                 if (status == "approved") {
                                     // Owners go to their dashboard (if you have one)
@@ -110,8 +112,10 @@ class LoginActivity : AppCompatActivity() {
                                     ).show()
                                 }
                             }
+
                             else -> {
-                                Toast.makeText(this, "Invalid role: $role", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this, "Invalid role: $role", Toast.LENGTH_SHORT)
+                                    .show()
                             }
                         }
                     } else {
