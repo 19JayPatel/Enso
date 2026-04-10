@@ -48,6 +48,26 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
+        <!-- Navigation Flow Activities -->
+        <activity
+            android:name=".owner.AddNewServiceActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".owner.AddServicePricingActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".owner.AddServiceReviewActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".owner.ServicePublishedActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
         <!-- Auth Activities -->
         <activity
             android:name=".auth.LoginActivity"

@@ -1,10 +1,12 @@
 package com.example.enso.owner
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.widget.SwitchCompat
 import androidx.cardview.widget.CardView
@@ -22,6 +24,7 @@ class SalonOwnerServicesFragment : Fragment() {
 
     private lateinit var rvServices: RecyclerView
     private lateinit var adapter: ServicesAdapter
+    private lateinit var btnAddService: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,6 +50,13 @@ class SalonOwnerServicesFragment : Fragment() {
         // 3. Initialize Adapter
         adapter = ServicesAdapter(servicesList)
         rvServices.adapter = adapter
+
+        // 4. Navigation: Open AddNewServiceActivity
+        btnAddService = view.findViewById(R.id.btnAddService)
+        btnAddService.setOnClickListener {
+            val intent = Intent(requireContext(), AddNewServiceActivity::class.java)
+            startActivity(intent)
+        }
 
         return view
     }

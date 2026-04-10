@@ -36,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="Add New Salon"
+            android:text="Add Salon Details"
             android:textColor="#2D1A12"
             android:textSize="20sp"
             android:textStyle="bold" />
