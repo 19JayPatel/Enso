@@ -138,7 +138,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center"
-                            android:text="HC"
+                            android:text="S"
                             android:textColor="#A46C54"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -158,17 +158,19 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                         <TextView
+                            android:id="@+id/tvServiceNamePreview"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Hair Cut"
+                            android:text="Service Name"
                             android:textColor="@color/black"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/tvServiceDetailsPreview"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Hair • 30 min • 2 stylists"
+                            android:text="Category • 0 min"
                             android:textColor="#BDBDBD"
                             android:textSize="13sp" />
 
@@ -205,9 +207,10 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/tvPricePreview"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="25"
+                            android:text="0"
                             android:textColor="#A46C54"
                             android:textSize="22sp"
                             android:textStyle="bold" />
@@ -253,62 +256,75 @@
 
                     <!-- ROWS -->
                     <LinearLayout style="@style/SummaryRow">
-                        <TextView style="@style/SummaryLabel" android:text="Service name" />
-                        <TextView style="@style/SummaryValue" android:text="Hair Cut" />
+
+                        <TextView
+                            style="@style/SummaryLabel"
+                            android:text="Service name" />
+
+                        <TextView
+                            android:id="@+id/tvSummaryName"
+                            style="@style/SummaryValue"
+                            android:text="-" />
                     </LinearLayout>
+
                     <View style="@style/SummaryDivider" />
 
                     <LinearLayout style="@style/SummaryRow">
-                        <TextView style="@style/SummaryLabel" android:text="Category" />
-                        <TextView style="@style/SummaryValue" android:text="Hair" />
+
+                        <TextView
+                            style="@style/SummaryLabel"
+                            android:text="Category" />
+
+                        <TextView
+                            android:id="@+id/tvSummaryCategory"
+                            style="@style/SummaryValue"
+                            android:text="-" />
                     </LinearLayout>
+
                     <View style="@style/SummaryDivider" />
 
                     <LinearLayout style="@style/SummaryRow">
-                        <TextView style="@style/SummaryLabel" android:text="Description" />
-                        <TextView style="@style/SummaryValue" android:layout_width="0dp" android:layout_weight="1" android:gravity="end" android:text="Professional cutting with styling and finishing." />
+
+                        <TextView
+                            style="@style/SummaryLabel"
+                            android:text="Description" />
+
+                        <TextView
+                            android:id="@+id/tvSummaryDescription"
+                            style="@style/SummaryValue"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text="-" />
                     </LinearLayout>
+
                     <View style="@style/SummaryDivider" />
 
                     <LinearLayout style="@style/SummaryRow">
-                        <TextView style="@style/SummaryLabel" android:text="Base price" />
-                        <TextView style="@style/SummaryValue" android:text="$25.00" android:textColor="#A46C54" />
+
+                        <TextView
+                            style="@style/SummaryLabel"
+                            android:text="Base price" />
+
+                        <TextView
+                            android:id="@+id/tvSummaryPrice"
+                            style="@style/SummaryValue"
+                            android:text="$0.00"
+                            android:textColor="#A46C54" />
                     </LinearLayout>
+
                     <View style="@style/SummaryDivider" />
 
                     <LinearLayout style="@style/SummaryRow">
-                        <TextView style="@style/SummaryLabel" android:text="Discount" />
-                        <TextView style="@style/SummaryValue" android:text="None" />
-                    </LinearLayout>
-                    <View style="@style/SummaryDivider" />
 
-                    <LinearLayout style="@style/SummaryRow">
-                        <TextView style="@style/SummaryLabel" android:text="Duration" />
-                        <TextView style="@style/SummaryValue" android:text="30 minutes" />
-                    </LinearLayout>
-                    <View style="@style/SummaryDivider" />
+                        <TextView
+                            style="@style/SummaryLabel"
+                            android:text="Duration" />
 
-                    <LinearLayout style="@style/SummaryRow">
-                        <TextView style="@style/SummaryLabel" android:text="Assigned stylists" />
-                        <TextView style="@style/SummaryValue" android:text="Emma K., James T." />
-                    </LinearLayout>
-                    <View style="@style/SummaryDivider" />
-
-                    <LinearLayout style="@style/SummaryRow">
-                        <TextView style="@style/SummaryLabel" android:text="Available for booking" />
-                        <TextView style="@style/SummaryValue" android:text="Yes — Active" android:textColor="#A46C54" />
-                    </LinearLayout>
-                    <View style="@style/SummaryDivider" />
-
-                    <LinearLayout style="@style/SummaryRow">
-                        <TextView style="@style/SummaryLabel" android:text="Requires deposit" />
-                        <TextView style="@style/SummaryValue" android:text="No" />
-                    </LinearLayout>
-                    <View style="@style/SummaryDivider" />
-
-                    <LinearLayout style="@style/SummaryRow">
-                        <TextView style="@style/SummaryLabel" android:text="Back-to-back slots" />
-                        <TextView style="@style/SummaryValue" android:text="Disabled" />
+                        <TextView
+                            android:id="@+id/tvSummaryDuration"
+                            style="@style/SummaryValue"
+                            android:text="0 minutes" />
                     </LinearLayout>
 
                 </LinearLayout>

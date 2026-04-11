@@ -1,12 +1,13 @@
 package com.example.enso.owner
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.enso.R
 import com.example.enso.admin.AddSalonActivity
@@ -22,6 +23,7 @@ class SalonOwnerProfileFragment : Fragment() {
     private lateinit var tvOwnerName: TextView
     private lateinit var tvOwnerSubtitle: TextView
     private lateinit var tvOwnerEmail: TextView
+    private lateinit var btnLogout: Button
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,8 +46,9 @@ class SalonOwnerProfileFragment : Fragment() {
         tvOwnerName = view.findViewById(R.id.tvOwnerName)
         tvOwnerSubtitle = view.findViewById(R.id.tvOwnerSubtitle)
         tvOwnerEmail = view.findViewById(R.id.tvOwnerEmail)
+        btnLogout = view.findViewById(R.id.btnLogout)
 
-        // ✅ STEP 2: PROFILE (OWNER NAME & EMAIL DYNAMIC)
+        // ✅ PROFILE (OWNER NAME & EMAIL DYNAMIC)
         val userRef = FirebaseDatabase.getInstance().getReference("Users").child(userId)
         userRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -60,7 +63,7 @@ class SalonOwnerProfileFragment : Fragment() {
             override fun onCancelled(error: DatabaseError) {}
         })
 
-        // ✅ STEP 3: SALON NAME DYNAMIC (Subtitle)
+        // ✅ SALON NAME DYNAMIC (Subtitle)
         val salonRef = FirebaseDatabase.getInstance().getReference("Salons")
         salonRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -78,7 +81,30 @@ class SalonOwnerProfileFragment : Fragment() {
             override fun onCancelled(error: DatabaseError) {}
         })
 
-        // Original logic: Set click listener to open AddSalonActivity
+        // ✅ LOGOUT LOGIC
+        btnLogout.setOnClickListener {
+            AlertDialog.Builder(requireContext())
+                .setTitle("Logout")
+                .setMessage("Are you sure you want to logout?")
+                .setPositiveButton("Yes") { _, _ ->
+                    // Logout from Firebase
+                    FirebaseAuth.getInstance().signOut()
+
+                    // Redirect to LoginActivity
+                    val intent = Intent(requireContext(), LoginActivity::class.java)
+                    
+                    // Clear back stack so user cannot go back
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+
+                    // Close current activity
+                    requireActivity().finish()
+                }
+                .setNegativeButton("Cancel", null)
+                .show()
+        }
+
+        // Navigation to AddSalonActivity
         val cvSalonSection = view.findViewById<ViewGroup>(R.id.cvSalonSection)
         if (cvSalonSection != null) {
             val salonSectionContainer = cvSalonSection.getChildAt(0) as ViewGroup

@@ -171,6 +171,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:orientation="vertical">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -178,6 +179,7 @@
                             android:textColor="@color/black"
                             android:textSize="18sp"
                             android:textStyle="bold" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -197,6 +199,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:orientation="vertical">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -204,6 +207,7 @@
                             android:textColor="@color/black"
                             android:textSize="18sp"
                             android:textStyle="bold" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -223,6 +227,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:orientation="vertical">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -230,6 +235,7 @@
                             android:textColor="@color/black"
                             android:textSize="18sp"
                             android:textStyle="bold" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -249,6 +255,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:orientation="vertical">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -256,6 +263,7 @@
                             android:textColor="@color/black"
                             android:textSize="18sp"
                             android:textStyle="bold" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -301,6 +309,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="64dp"
                         android:paddingHorizontal="12dp">
+
                         <View
                             android:id="@+id/vIconBg1"
                             android:layout_width="40dp"
@@ -310,6 +319,7 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
+
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
@@ -318,6 +328,7 @@
                             app:layout_constraintEnd_toEndOf="@+id/vIconBg1"
                             app:layout_constraintStart_toStartOf="@+id/vIconBg1"
                             app:layout_constraintTop_toTopOf="@+id/vIconBg1" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -329,6 +340,7 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/vIconBg1"
                             app:layout_constraintTop_toTopOf="parent" />
+
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
@@ -338,13 +350,18 @@
                             app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <View android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginStart="64dp" android:background="#F0F0F0" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="64dp"
+                        android:background="#F0F0F0" />
 
                     <!-- Manage Stylists -->
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="64dp"
                         android:paddingHorizontal="12dp">
+
                         <View
                             android:id="@+id/vIconBg2"
                             android:layout_width="40dp"
@@ -354,6 +371,7 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
+
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
@@ -362,6 +380,7 @@
                             app:layout_constraintEnd_toEndOf="@+id/vIconBg2"
                             app:layout_constraintStart_toStartOf="@+id/vIconBg2"
                             app:layout_constraintTop_toTopOf="@+id/vIconBg2" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -373,6 +392,7 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/vIconBg2"
                             app:layout_constraintTop_toTopOf="parent" />
+
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
@@ -382,13 +402,18 @@
                             app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <View android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginStart="64dp" android:background="#F0F0F0" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="64dp"
+                        android:background="#F0F0F0" />
 
                     <!-- Working Hours -->
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="64dp"
                         android:paddingHorizontal="12dp">
+
                         <View
                             android:id="@+id/vIconBg3"
                             android:layout_width="40dp"
@@ -398,6 +423,7 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
+
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
@@ -407,6 +433,7 @@
                             app:layout_constraintStart_toStartOf="@+id/vIconBg3"
                             app:layout_constraintTop_toTopOf="@+id/vIconBg3"
                             app:tint="@color/primary_brown" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -418,6 +445,7 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/vIconBg3"
                             app:layout_constraintTop_toTopOf="parent" />
+
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
@@ -464,6 +492,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="64dp"
                         android:paddingHorizontal="12dp">
+
                         <View
                             android:id="@+id/vIconBg4"
                             android:layout_width="40dp"
@@ -473,6 +502,7 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
+
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
@@ -481,6 +511,7 @@
                             app:layout_constraintEnd_toEndOf="@+id/vIconBg4"
                             app:layout_constraintStart_toStartOf="@+id/vIconBg4"
                             app:layout_constraintTop_toTopOf="@+id/vIconBg4" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -492,6 +523,7 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/vIconBg4"
                             app:layout_constraintTop_toTopOf="parent" />
+
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
@@ -501,13 +533,18 @@
                             app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <View android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginStart="64dp" android:background="#F0F0F0" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="64dp"
+                        android:background="#F0F0F0" />
 
                     <!-- Notifications -->
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="64dp"
                         android:paddingHorizontal="12dp">
+
                         <View
                             android:id="@+id/vIconBg5"
                             android:layout_width="40dp"
@@ -517,6 +554,7 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
+
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
@@ -525,6 +563,7 @@
                             app:layout_constraintEnd_toEndOf="@+id/vIconBg5"
                             app:layout_constraintStart_toStartOf="@+id/vIconBg5"
                             app:layout_constraintTop_toTopOf="@+id/vIconBg5" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -536,6 +575,7 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/vIconBg5"
                             app:layout_constraintTop_toTopOf="parent" />
+
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
@@ -545,13 +585,18 @@
                             app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <View android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginStart="64dp" android:background="#F0F0F0" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="64dp"
+                        android:background="#F0F0F0" />
 
                     <!-- Payouts & Banking -->
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="64dp"
                         android:paddingHorizontal="12dp">
+
                         <View
                             android:id="@+id/vIconBg6"
                             android:layout_width="40dp"
@@ -561,6 +606,7 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
+
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
@@ -570,6 +616,7 @@
                             app:layout_constraintStart_toStartOf="@+id/vIconBg6"
                             app:layout_constraintTop_toTopOf="@+id/vIconBg6"
                             app:tint="@android:color/holo_green_dark" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -581,6 +628,7 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/vIconBg6"
                             app:layout_constraintTop_toTopOf="parent" />
+
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
@@ -590,13 +638,18 @@
                             app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <View android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginStart="64dp" android:background="#F0F0F0" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="64dp"
+                        android:background="#F0F0F0" />
 
                     <!-- Help & Support -->
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="64dp"
                         android:paddingHorizontal="12dp">
+
                         <View
                             android:id="@+id/vIconBg7"
                             android:layout_width="40dp"
@@ -606,6 +659,7 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
+
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
@@ -615,6 +669,7 @@
                             app:layout_constraintStart_toStartOf="@+id/vIconBg7"
                             app:layout_constraintTop_toTopOf="@+id/vIconBg7"
                             app:tint="@android:color/holo_blue_dark" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -626,6 +681,7 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/vIconBg7"
                             app:layout_constraintTop_toTopOf="parent" />
+
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"

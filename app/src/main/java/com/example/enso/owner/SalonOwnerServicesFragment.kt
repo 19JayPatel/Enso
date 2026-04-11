@@ -8,48 +8,53 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.widget.SwitchCompat
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.enso.R
+import com.example.enso.auth.LoginActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 
 /**
  * Salon Owner Services Management Fragment
- * This fragment allows owners to view and toggle availability of their services.
- * Features: Search bar, Category filter, and a Toggleable list of services.
+ * Displays dynamic services from Firebase for the logged-in owner.
  */
 class SalonOwnerServicesFragment : Fragment() {
 
     private lateinit var rvServices: RecyclerView
-    private lateinit var adapter: ServicesAdapter
+    private lateinit var serviceAdapter: ServicesAdapter
     private lateinit var btnAddService: Button
+    private lateinit var database: DatabaseReference
+    private val serviceList = ArrayList<ServiceModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_salon_owner_services, container, false)
 
-        // 1. Setup RecyclerView
+        // 1. Firebase Check
+        val user = FirebaseAuth.getInstance().currentUser
+        if (user == null) {
+            startActivity(Intent(requireContext(), LoginActivity::class.java))
+            activity?.finish()
+            return view
+        }
+        val userId = user.uid
+
+        // 2. Setup RecyclerView
         rvServices = view.findViewById(R.id.rvServices)
         rvServices.layoutManager = LinearLayoutManager(requireContext())
+        serviceAdapter = ServicesAdapter(serviceList)
+        rvServices.adapter = serviceAdapter
 
-        // 2. Load Dummy Data
-        val servicesList = listOf(
-            Service("Hair Cut", "30 min • 2 stylists", "$25", true, "HC"),
-            Service("Hair Styling", "45 min • 3 stylists", "$35", true, "HS"),
-            Service("Hair Coloring", "90 min • 1 stylist", "$80", true, "HC"),
-            Service("Nail Art", "60 min • 2 stylists", "$40", false, "NA"),
-            Service("Hair Wash", "20 min • All stylists", "$15", true, "HW"),
-            Service("Facial Treatment", "75 min • 1 specialist", "$65", true, "FT")
-        )
-
-        // 3. Initialize Adapter
-        adapter = ServicesAdapter(servicesList)
-        rvServices.adapter = adapter
+        // 3. Fetch Data from Firebase
+        database = FirebaseDatabase.getInstance().getReference("Services")
+        fetchOwnerServices(userId)
 
         // 4. Navigation: Open AddNewServiceActivity
         btnAddService = view.findViewById(R.id.btnAddService)
@@ -60,24 +65,46 @@ class SalonOwnerServicesFragment : Fragment() {
 
         return view
     }
+
+    private fun fetchOwnerServices(userId: String) {
+        database.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                serviceList.clear()
+                if (snapshot.exists()) {
+                    for (serviceSnap in snapshot.children) {
+                        val ownerId = serviceSnap.child("ownerId").getValue(String::class.java)
+                        
+                        // Filter by logged-in owner
+                        if (ownerId == userId) {
+                            val service = serviceSnap.getValue(ServiceModel::class.java)
+                            if (service != null) {
+                                serviceList.add(service)
+                            }
+                        }
+                    }
+                    
+                    if (serviceList.isEmpty()) {
+                        Toast.makeText(requireContext(), "No services added yet", Toast.LENGTH_SHORT).show()
+                    }
+                    
+                    serviceAdapter.notifyDataSetChanged()
+                } else {
+                    Toast.makeText(requireContext(), "No services added yet", Toast.LENGTH_SHORT).show()
+                    serviceAdapter.notifyDataSetChanged()
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(requireContext(), error.message, Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
 }
 
 /**
- * Service Data Model
+ * Simple RecyclerView Adapter for Firebase Services
  */
-data class Service(
-    val name: String,
-    val duration: String,
-    val price: String,
-    var isEnabled: Boolean,
-    val initials: String
-)
-
-/**
- * Simple RecyclerView Adapter for Services
- * Beginner-friendly implementation without complex patterns.
- */
-class ServicesAdapter(private val services: List<Service>) :
+class ServicesAdapter(private val services: List<ServiceModel>) :
     RecyclerView.Adapter<ServicesAdapter.ServiceViewHolder>() {
 
     class ServiceViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -96,18 +123,23 @@ class ServicesAdapter(private val services: List<Service>) :
     }
 
     override fun onBindViewHolder(holder: ServiceViewHolder, position: Int) {
-        val item = services[position]
+        val model = services[position]
 
         // Bind data to views
-        holder.tvInitials.text = item.initials
-        holder.tvServiceName.text = item.name
-        holder.tvServiceDuration.text = item.duration
-        holder.tvPrice.text = item.price
-        holder.switchEnable.isChecked = item.isEnabled
+        holder.tvServiceName.text = model.serviceName
+        holder.tvPrice.text = "$" + model.price
+        holder.tvServiceDuration.text = model.duration + " min"
+        
+        // Status Toggle
+        holder.switchEnable.isChecked = model.status == "active"
 
-        // Update model when switch toggled
-        holder.switchEnable.setOnCheckedChangeListener { _, isChecked ->
-            item.isEnabled = isChecked
+        // Set Initials based on Category (Step 7)
+        holder.tvInitials.text = when(model.category) {
+            "Hair" -> "H"
+            "Nails" -> "N"
+            "Skin" -> "S"
+            "Spa" -> "SP"
+            else -> model.serviceName?.take(1)?.uppercase() ?: "S"
         }
 
         // Apply distinct colors to the initials circle for better UI
@@ -117,6 +149,16 @@ class ServicesAdapter(private val services: List<Service>) :
         
         holder.cvInitials.setCardBackgroundColor(Color.parseColor(bgColors[colorIdx]))
         holder.tvInitials.setTextColor(Color.parseColor(textColors[colorIdx]))
+        
+        // Handle Toggle (Optional: Update Firebase if needed, but following simplified steps)
+        holder.switchEnable.setOnCheckedChangeListener { _, isChecked ->
+            model.status = if (isChecked) "active" else "inactive"
+            // Update in Firebase if serviceId exists
+            model.serviceId?.let { id ->
+                FirebaseDatabase.getInstance().getReference("Services").child(id).child("status")
+                    .setValue(model.status)
+            }
+        }
     }
 
     override fun getItemCount() = services.size
