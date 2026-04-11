@@ -59,16 +59,8 @@ class SalonAdapter(private var salonList: List<SalonModel>) :
         
         holder.tvStatus.text = salon.status.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
         
-        holder.tvInitials.text = if (salon.salonName.isNotEmpty()) {
-            val words = salon.salonName.trim().split(" ")
-            if (words.size >= 2) {
-                (words[0].take(1) + words[1].take(1)).uppercase()
-            } else {
-                salon.salonName.take(2).uppercase()
-            }
-        } else {
-            "S"
-        }
+        // Use the getInitials logic
+        holder.tvInitials.text = getInitials(salon.salonName).uppercase()
 
         // Visibility Logic
         if (salon.status == "pending") {
@@ -115,6 +107,16 @@ class SalonAdapter(private var salonList: List<SalonModel>) :
         holder.btnRestore.setOnClickListener {
             FirebaseDatabase.getInstance().getReference("Salons")
                 .child(salon.salonId).child("status").setValue("active")
+        }
+    }
+
+    private fun getInitials(name: String): String {
+        if (name.isEmpty()) return "S"
+        val words = name.trim().split(" ")
+        return if (words.size >= 2) {
+            "${words[0][0]}${words[1][0]}"
+        } else {
+            words[0][0].toString()
         }
     }
 

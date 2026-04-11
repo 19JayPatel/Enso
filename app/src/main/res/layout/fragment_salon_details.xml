@@ -76,16 +76,67 @@
                 android:paddingHorizontal="20dp">
 
                 <!-- Salon Image -->
-                <com.google.android.material.imageview.ShapeableImageView
+                <!-- Salon Header Card -->
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="220dp"
                     android:layout_marginTop="16dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/hair_avenue"
-                    app:shapeAppearanceOverlay="@style/RoundedCornersImage" />
+                    app:cardBackgroundColor="#bfa98e"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="0dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <!-- Circle Initials View -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cvInitials"
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            app:cardBackgroundColor="@android:color/transparent"
+                            app:cardCornerRadius="45dp"
+                            app:cardElevation="0dp"
+                            app:layout_constraintBottom_toTopOf="@+id/tvHeaderSalonName"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_chainStyle="packed"
+                            app:strokeColor="@color/white"
+                            app:strokeWidth="2dp">
+
+                            <TextView
+                                android:id="@+id/tvInitials"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="HA"
+                                android:textColor="@color/white"
+                                android:textSize="24sp"
+                                android:textStyle="bold" />
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <!-- Dynamic Salon Name -->
+                        <TextView
+                            android:id="@+id/tvHeaderSalonName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:text="Hair Avenue"
+                            android:textColor="@color/white"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/cvInitials" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.card.MaterialCardView>
 
                 <!-- Salon Details -->
                 <TextView
+                    android:id="@+id/tvSalonName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
@@ -108,6 +159,7 @@
                         app:tint="@color/text_gray" />
 
                     <TextView
+                        android:id="@+id/tvLocation"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -152,6 +204,7 @@
                         app:tint="@color/rating_star" />
 
                     <TextView
+                        android:id="@+id/tvRating"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -229,166 +282,13 @@
                 </HorizontalScrollView>
 
                 <!-- Service Items -->
-                <LinearLayout
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvServices"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <!-- Item 1 -->
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/cvService1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        app:cardBackgroundColor="@color/white"
-                        app:cardCornerRadius="16dp"
-                        app:cardElevation="0dp"
-                        app:checkedIcon="@null"
-                        app:strokeColor="@color/service_card_stroke_color"
-                        app:strokeWidth="0dp"
-                        android:checkable="true">
-                        <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="16dp">
-                            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentStart="true" android:orientation="vertical">
-                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Hair Cut" android:textColor="@color/black" android:textSize="16sp" android:textStyle="bold" />
-                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="45 Mins • $25" android:textColor="@color/text_gray" android:textSize="14sp" />
-                            </LinearLayout>
-                            <com.google.android.material.checkbox.MaterialCheckBox android:id="@+id/cbService1" android:layout_width="32dp" android:layout_height="32dp" android:layout_alignParentEnd="true" android:layout_centerVertical="true" android:button="@null" android:background="@drawable/bg_circle_checkbox" android:clickable="false" android:focusable="false" />
-                        </RelativeLayout>
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <!-- Item 2 -->
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/cvService2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        app:cardBackgroundColor="@color/white"
-                        app:cardCornerRadius="16dp"
-                        app:cardElevation="0dp"
-                        app:checkedIcon="@null"
-                        app:strokeColor="@color/service_card_stroke_color"
-                        app:strokeWidth="0dp"
-                        android:checkable="true">
-                        <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="16dp">
-                            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentStart="true" android:orientation="vertical">
-                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Hair Wash" android:textColor="@color/black" android:textSize="16sp" android:textStyle="bold" />
-                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="30 Mins • $10" android:textColor="@color/text_gray" android:textSize="14sp" />
-                            </LinearLayout>
-                            <com.google.android.material.checkbox.MaterialCheckBox android:id="@+id/cbService2" android:layout_width="32dp" android:layout_height="32dp" android:layout_alignParentEnd="true" android:layout_centerVertical="true" android:button="@null" android:background="@drawable/bg_circle_checkbox" android:clickable="false" android:focusable="false" />
-                        </RelativeLayout>
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <!-- Item 3 -->
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/cvService3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        app:cardBackgroundColor="@color/white"
-                        app:cardCornerRadius="16dp"
-                        app:cardElevation="0dp"
-                        app:checkedIcon="@null"
-                        app:strokeColor="@color/service_card_stroke_color"
-                        app:strokeWidth="0dp"
-                        android:checkable="true">
-                        <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="16dp">
-                            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentStart="true" android:orientation="vertical">
-                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Hair Styling" android:textColor="@color/black" android:textSize="16sp" android:textStyle="bold" />
-                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="45 Mins • $15" android:textColor="@color/text_gray" android:textSize="14sp" />
-                            </LinearLayout>
-                            <com.google.android.material.checkbox.MaterialCheckBox android:id="@+id/cbService3" android:layout_width="32dp" android:layout_height="32dp" android:layout_alignParentEnd="true" android:layout_centerVertical="true" android:button="@null" android:background="@drawable/bg_circle_checkbox" android:clickable="false" android:focusable="false" />
-                        </RelativeLayout>
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <!-- Item 4 -->
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/cvService4"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        app:cardBackgroundColor="@color/white"
-                        app:cardCornerRadius="16dp"
-                        app:cardElevation="0dp"
-                        app:checkedIcon="@null"
-                        app:strokeColor="@color/service_card_stroke_color"
-                        app:strokeWidth="0dp"
-                        android:checkable="true">
-                        <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="16dp">
-                            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentStart="true" android:orientation="vertical">
-                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Hair Coloring" android:textColor="@color/black" android:textSize="16sp" android:textStyle="bold" />
-                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="90 Mins • $50" android:textColor="@color/text_gray" android:textSize="14sp" />
-                            </LinearLayout>
-                            <com.google.android.material.checkbox.MaterialCheckBox android:id="@+id/cbService4" android:layout_width="32dp" android:layout_height="32dp" android:layout_alignParentEnd="true" android:layout_centerVertical="true" android:button="@null" android:background="@drawable/bg_circle_checkbox" android:clickable="false" android:focusable="false" />
-                        </RelativeLayout>
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <!-- Item 5 -->
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/cvService5"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        app:cardBackgroundColor="@color/white"
-                        app:cardCornerRadius="16dp"
-                        app:cardElevation="0dp"
-                        app:checkedIcon="@null"
-                        app:strokeColor="@color/service_card_stroke_color"
-                        app:strokeWidth="0dp"
-                        android:checkable="true">
-                        <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="16dp">
-                            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentStart="true" android:orientation="vertical">
-                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Facial Treatment" android:textColor="@color/black" android:textSize="16sp" android:textStyle="bold" />
-                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="60 Mins • $30" android:textColor="@color/text_gray" android:textSize="14sp" />
-                            </LinearLayout>
-                            <com.google.android.material.checkbox.MaterialCheckBox android:id="@+id/cbService5" android:layout_width="32dp" android:layout_height="32dp" android:layout_alignParentEnd="true" android:layout_centerVertical="true" android:button="@null" android:background="@drawable/bg_circle_checkbox" android:clickable="false" android:focusable="false" />
-                        </RelativeLayout>
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <!-- Item 6 -->
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/cvService6"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        app:cardBackgroundColor="@color/white"
-                        app:cardCornerRadius="16dp"
-                        app:cardElevation="0dp"
-                        app:checkedIcon="@null"
-                        app:strokeColor="@color/service_card_stroke_color"
-                        app:strokeWidth="0dp"
-                        android:checkable="true">
-                        <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="16dp">
-                            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentStart="true" android:orientation="vertical">
-                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Head Massage" android:textColor="@color/black" android:textSize="16sp" android:textStyle="bold" />
-                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="30 Mins • $20" android:textColor="@color/text_gray" android:textSize="14sp" />
-                            </LinearLayout>
-                            <com.google.android.material.checkbox.MaterialCheckBox android:id="@+id/cbService6" android:layout_width="32dp" android:layout_height="32dp" android:layout_alignParentEnd="true" android:layout_centerVertical="true" android:button="@null" android:background="@drawable/bg_circle_checkbox" android:clickable="false" android:focusable="false" />
-                        </RelativeLayout>
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <!-- Item 7 -->
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/cvService7"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        app:cardBackgroundColor="@color/white"
-                        app:cardCornerRadius="16dp"
-                        app:cardElevation="0dp"
-                        app:checkedIcon="@null"
-                        app:strokeColor="@color/service_card_stroke_color"
-                        app:strokeWidth="0dp"
-                        android:checkable="true">
-                        <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="16dp">
-                            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentStart="true" android:orientation="vertical">
-                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Beard Trim" android:textColor="@color/black" android:textSize="16sp" android:textStyle="bold" />
-                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="20 Mins • $8" android:textColor="@color/text_gray" android:textSize="14sp" />
-                            </LinearLayout>
-                            <com.google.android.material.checkbox.MaterialCheckBox android:id="@+id/cbService7" android:layout_width="32dp" android:layout_height="32dp" android:layout_alignParentEnd="true" android:layout_centerVertical="true" android:button="@null" android:background="@drawable/bg_circle_checkbox" android:clickable="false" android:focusable="false" />
-                        </RelativeLayout>
-                    </com.google.android.material.card.MaterialCardView>
-
-                </LinearLayout>
+                    android:layout_marginTop="16dp"
+                    android:nestedScrollingEnabled="false"
+                    tools:listitem="@layout/item_service_owner" />
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>

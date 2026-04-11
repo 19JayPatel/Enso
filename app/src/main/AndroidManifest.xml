@@ -100,6 +100,14 @@
             android:name=".customer.activities.MapViewActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".customer.adapters.AllSalonActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".customer.activities.SalonDetailsActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

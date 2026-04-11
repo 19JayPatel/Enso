@@ -7,18 +7,38 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.enso.R
 import com.example.enso.customer.activities.ChooseStylistActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.checkbox.MaterialCheckBox
+import com.google.firebase.database.*
+
+/**
+ * Updated Service model as requested
+ */
+data class Service(
+    var serviceId: String = "",
+    var serviceName: String = "",
+    var price: String = "",
+    var duration: String = "",
+    var ownerId: String = "",
+    var category: String = ""
+)
 
 class SalonDetailsFragment : Fragment() {
 
-    private val selectedServices = mutableSetOf<Int>()
+    private val selectedServices = mutableSetOf<String>()
     private lateinit var btnContinue: MaterialButton
+    private lateinit var rvServices: RecyclerView
+    private lateinit var serviceAdapter: ServiceAdapter
+    private val serviceList = ArrayList<Service>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,65 +51,178 @@ class SalonDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.findViewById<View>(R.id.btnBack).setOnClickListener {
-            parentFragmentManager.popBackStack()
+        // 1. Get Salon Data from Arguments
+        val name = arguments?.getString("name") ?: "Hair Avenue"
+        val location = arguments?.getString("location") ?: "Location"
+        val rating = arguments?.getString("rating") ?: "4.7 (312)"
+        val salonId = arguments?.getString("salonId")
+
+        // 2. References to UI Views
+        val tvInitials = view.findViewById<TextView>(R.id.tvInitials)
+        val tvHeaderSalonName = view.findViewById<TextView>(R.id.tvHeaderSalonName)
+        val tvSalonName = view.findViewById<TextView>(R.id.tvSalonName)
+        val tvLocation = view.findViewById<TextView>(R.id.tvLocation)
+        val tvRating = view.findViewById<TextView>(R.id.tvRating)
+        btnContinue = view.findViewById(R.id.btnContinue)
+        rvServices = view.findViewById(R.id.rvServices)
+
+        // 3. Setup RecyclerView
+        rvServices.layoutManager = LinearLayoutManager(requireContext())
+        serviceAdapter = ServiceAdapter(serviceList) { service, isSelected ->
+            if (isSelected) {
+                selectedServices.add(service.serviceId)
+            } else {
+                selectedServices.remove(service.serviceId)
+            }
+            updateContinueButton()
+        }
+        rvServices.adapter = serviceAdapter
+
+        // 4. Generate Initials
+        val initials = name.split(" ").filter { it.isNotEmpty() }.map { it[0] }.joinToString("").take(2).uppercase()
+
+        // 5. Set Static Data to UI
+        tvInitials.text = initials
+        tvHeaderSalonName.text = name
+        tvSalonName.text = name
+        tvLocation.text = location
+        tvRating.text = rating
+
+        // 6. 🔥 FETCH SERVICES BASED ON SALON OWNER ID
+        if (salonId != null) {
+            fetchSalonServices(salonId)
         }
 
-        btnContinue = view.findViewById(R.id.btnContinue)
-        
+        view.findViewById<View>(R.id.btnBack).setOnClickListener {
+            if (parentFragmentManager.backStackEntryCount > 0) {
+                parentFragmentManager.popBackStack()
+            } else {
+                requireActivity().finish()
+            }
+        }
+
         btnContinue.setOnClickListener {
             val intent = Intent(requireContext(), ChooseStylistActivity::class.java)
+            intent.putExtra("salonId", salonId)
+            intent.putExtra("selectedServices", ArrayList(selectedServices.toList()))
             startActivity(intent)
         }
-
-        // Initialize all service clicks
-        setupServiceClick(view, R.id.cvService1, R.id.cbService1, 1)
-        setupServiceClick(view, R.id.cvService2, R.id.cbService2, 2)
-        setupServiceClick(view, R.id.cvService3, R.id.cbService3, 3)
-        setupServiceClick(view, R.id.cvService4, R.id.cbService4, 4)
-        setupServiceClick(view, R.id.cvService5, R.id.cbService5, 5)
-        setupServiceClick(view, R.id.cvService6, R.id.cbService6, 6)
-        setupServiceClick(view, R.id.cvService7, R.id.cbService7, 7)
 
         updateContinueButton()
     }
 
-    private fun setupServiceClick(root: View, cardId: Int, checkBoxId: Int, serviceId: Int) {
-        val card = root.findViewById<MaterialCardView>(cardId)
-        val checkBox = root.findViewById<MaterialCheckBox>(checkBoxId)
-
-        card.setOnClickListener {
-            val isCurrentlyChecked = card.isChecked
-            val newState = !isCurrentlyChecked
-            
-            card.isChecked = newState
-            checkBox.isChecked = newState
-
-            if (newState) {
-                selectedServices.add(serviceId)
-                card.setStrokeColor(ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.primary_brown)))
-                card.setStrokeWidth(4)
-            } else {
-                selectedServices.remove(serviceId)
-                card.setStrokeColor(ColorStateList.valueOf(Color.TRANSPARENT))
-                card.setStrokeWidth(0)
+    private fun fetchSalonServices(salonId: String) {
+        val salonRef = FirebaseDatabase.getInstance().getReference("Salons").child(salonId)
+        
+        salonRef.get().addOnSuccessListener { snapshot ->
+            if (snapshot.exists()) {
+                val ownerId = snapshot.child("ownerId").getValue(String::class.java)
+                if (ownerId != null) {
+                    loadServicesByOwner(ownerId)
+                }
             }
-            updateContinueButton()
+        }.addOnFailureListener {
+            Toast.makeText(requireContext(), "Error fetching salon details", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun loadServicesByOwner(ownerId: String) {
+        val serviceRef = FirebaseDatabase.getInstance().getReference("Services")
+        
+        serviceRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                serviceList.clear()
+                for (data in snapshot.children) {
+                    val service = data.getValue(Service::class.java)
+                    if (service != null && service.ownerId == ownerId) {
+                        service.serviceId = data.key ?: ""
+                        serviceList.add(service)
+                    }
+                }
+                serviceAdapter.notifyDataSetChanged()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(requireContext(), "Failed to load services", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     private fun updateContinueButton() {
         val count = selectedServices.size
         btnContinue.text = "Continue ($count)"
-        
+
         if (count > 0) {
             btnContinue.isEnabled = true
-            btnContinue.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.primary_brown))
+            btnContinue.backgroundTintList = ColorStateList.valueOf(
+                ContextCompat.getColor(requireContext(), R.color.primary_brown)
+            )
             btnContinue.setTextColor(Color.WHITE)
         } else {
             btnContinue.isEnabled = false
-            btnContinue.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#D3D3D3")) // Grey
-            btnContinue.setTextColor(Color.parseColor("#8E8E8E")) // Light grey text
+            btnContinue.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#D3D3D3"))
+            btnContinue.setTextColor(Color.parseColor("#8E8E8E"))
         }
+    }
+
+    /**
+     * Inner Adapter for Services
+     */
+    inner class ServiceAdapter(
+        private val services: List<Service>,
+        private val onServiceClick: (Service, Boolean) -> Unit
+    ) : RecyclerView.Adapter<ServiceAdapter.ServiceViewHolder>() {
+
+        private val selectedItems = mutableSetOf<Int>()
+
+        inner class ServiceViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+            val cvService: MaterialCardView = view.findViewById(R.id.cvService)
+            val tvName: TextView = view.findViewById(R.id.tvName)
+            val tvPrice: TextView = view.findViewById(R.id.tvPrice)
+            val tvDuration: TextView = view.findViewById(R.id.tvDuration)
+            val cbService: MaterialCheckBox = view.findViewById(R.id.cbService)
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ServiceViewHolder {
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_service_customer, parent, false)
+            return ServiceViewHolder(view)
+        }
+
+        override fun onBindViewHolder(holder: ServiceViewHolder, position: Int) {
+            val service = services[position]
+            holder.tvName.text = service.serviceName
+            
+            // Format price and duration to match image ($35.00)
+            val formattedPrice = if (service.price.contains("$")) service.price else "$${service.price}"
+            val finalPrice = if (formattedPrice.contains(".")) formattedPrice else "$formattedPrice.00"
+            
+            holder.tvPrice.text = finalPrice
+            holder.tvDuration.text = "${service.duration} Mins"
+            
+            val isSelected = selectedItems.contains(position)
+            holder.cvService.isChecked = isSelected
+            holder.cbService.isChecked = isSelected
+
+            if (isSelected) {
+                holder.cvService.setStrokeColor(ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.primary_brown)))
+                holder.cvService.setStrokeWidth(3)
+            } else {
+                holder.cvService.setStrokeColor(ColorStateList.valueOf(Color.TRANSPARENT))
+                holder.cvService.setStrokeWidth(0)
+            }
+
+            holder.cvService.setOnClickListener {
+                if (selectedItems.contains(position)) {
+                    selectedItems.remove(position)
+                    onServiceClick(service, false)
+                } else {
+                    selectedItems.add(position)
+                    onServiceClick(service, true)
+                }
+                notifyItemChanged(position)
+            }
+        }
+
+        override fun getItemCount(): Int = services.size
     }
 }

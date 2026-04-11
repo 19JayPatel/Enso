@@ -50,9 +50,25 @@ class MainActivity : AppCompatActivity() {
         bottomNav.menu.add(0, NAV_HEART, 2, "").setIcon(R.drawable.ic_heart_selector)
         bottomNav.menu.add(0, NAV_PROFILE, 3, "").setIcon(R.drawable.ic_profile_selector)
 
-        // Set Home as selected
-        bottomNav.selectedItemId = NAV_HOME
-        loadFragment(HomeFragment())
+        // 🔥 CHECK IF WE NEED TO OPEN A SPECIFIC FRAGMENT
+        val openFragment = intent.getStringExtra("openFragment")
+        if (openFragment == "salonDetails") {
+            val fragment = SalonDetailsFragment()
+            val bundle = Bundle()
+            bundle.putString("name", intent.getStringExtra("name"))
+            bundle.putString("location", intent.getStringExtra("location"))
+            bundle.putString("rating", intent.getStringExtra("rating"))
+            bundle.putString("salonId", intent.getStringExtra("salonId"))
+            fragment.arguments = bundle
+
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .commit()
+        } else {
+            // Default to Home
+            bottomNav.selectedItemId = NAV_HOME
+            loadFragment(HomeFragment())
+        }
 
         // Click handling
         bottomNav.setOnItemSelectedListener {
