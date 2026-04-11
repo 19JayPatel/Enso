@@ -16,7 +16,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.toColorInt
 import com.example.enso.customer.activities.MainActivity
 import com.example.enso.R
+import com.example.enso.admin.AddSalonActivity
 import com.example.enso.admin.AdminMainActivity
+import com.example.enso.owner.SalonOwnerMainActivity
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -92,24 +94,24 @@ class LoginActivity : AppCompatActivity() {
 
                             "customer" -> {
                                 val intent = Intent(this, MainActivity::class.java)
+                                intent.putExtra("userId", userId)
                                 startActivity(intent)
                                 finish()
                             }
 
-                            "owner" -> {
-                                if (status == "approved") {
-                                    // Owners go to their dashboard (if you have one)
-                                    // For now using AdminMainActivity as placeholder or check if OwnerMainActivity exists
-                                    val intent = Intent(this, AdminMainActivity::class.java)
+                            "salon_owner" -> {
+                                if (status == "pending") {
+                                    // If status is pending, redirect to add salon details
+                                    val intent = Intent(this, AddSalonActivity::class.java)
+                                    intent.putExtra("userId", userId)
                                     startActivity(intent)
                                     finish()
                                 } else {
-                                    auth.signOut()
-                                    Toast.makeText(
-                                        this,
-                                        "Waiting for admin approval",
-                                        Toast.LENGTH_LONG
-                                    ).show()
+                                    // If approved, go to Owner Dashboard
+                                    val intent = Intent(this, SalonOwnerMainActivity::class.java)
+                                    intent.putExtra("userId", userId)
+                                    startActivity(intent)
+                                    finish()
                                 }
                             }
 

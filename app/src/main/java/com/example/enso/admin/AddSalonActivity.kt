@@ -14,6 +14,7 @@ class AddSalonActivity : AppCompatActivity() {
     // Firebase
     private lateinit var database: FirebaseDatabase
     private lateinit var salonRef: DatabaseReference
+    private lateinit var userRef: DatabaseReference
 
     // Salon Details
     private lateinit var etSalonName: EditText
@@ -37,6 +38,9 @@ class AddSalonActivity : AppCompatActivity() {
     private lateinit var btnBack: CardView
     private lateinit var btnRegisterSalon: Button
 
+    private var userId: String? = null
+    private var ownerName: String = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_salon)
@@ -44,9 +48,16 @@ class AddSalonActivity : AppCompatActivity() {
         // 1. 📌 INITIALIZE FIREBASE
         database = FirebaseDatabase.getInstance()
         salonRef = database.getReference("Salons")
+        userRef = database.getReference("Users")
+
+        // Get userId from Intent
+        userId = intent.getStringExtra("userId")
 
         // Initialize all UI components
         initViews()
+
+        // Fetch and Auto-fill User Data
+        fetchAndPopulateUserData()
 
         // Setup Category Spinner
         setupSpinner()
@@ -86,6 +97,34 @@ class AddSalonActivity : AppCompatActivity() {
         btnRegisterSalon = findViewById(R.id.btnRegisterSalon)
     }
 
+    private fun fetchAndPopulateUserData() {
+        if (userId == null) return
+
+        userRef.child(userId!!).get().addOnSuccessListener { snapshot ->
+            if (snapshot.exists()) {
+                ownerName = snapshot.child("name").value.toString()
+                val email = snapshot.child("email").value.toString()
+
+                // Split name into first and last name
+                val nameParts = ownerName.split(" ", limit = 2)
+                val firstName = nameParts.getOrElse(0) { "" }
+                val lastName = nameParts.getOrElse(1) { "" }
+
+                // Auto-fill fields
+                etFirstName.setText(firstName)
+                etLastName.setText(lastName)
+                etEmail.setText(email)
+
+                // Make fields non-editable
+                etFirstName.isEnabled = false
+                etLastName.isEnabled = false
+                etEmail.isEnabled = false
+            }
+        }.addOnFailureListener {
+            Toast.makeText(this, "Failed to fetch user data", Toast.LENGTH_SHORT).show()
+        }
+    }
+
     private fun setupSpinner() {
         val categories = arrayOf("Hair & Styling", "Nail Art", "Facial & Makeup", "Spa & Massage")
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, categories)
@@ -93,35 +132,31 @@ class AddSalonActivity : AppCompatActivity() {
     }
 
     private fun registerSalon() {
-        // 3. 📌 GET ALL INPUT VALUES
+        // 1. 📌 COLLECT ALL INPUT VALUES
         val salonName = etSalonName.text.toString().trim()
         val description = etDescription.text.toString().trim()
         val category = spinnerCategory.selectedItem.toString()
-        val firstName = etFirstName.text.toString().trim()
-        val lastName = etLastName.text.toString().trim()
-        val email = etEmail.text.toString().trim()
         val phone = etPhone.text.toString().trim()
+        
+        // Address fields
         val street = etStreet.text.toString().trim()
         val city = etCity.text.toString().trim()
         val state = etState.text.toString().trim()
         val zip = etZip.text.toString().trim()
         val country = etCountry.text.toString().trim()
 
-        // 5. 📌 VALIDATION
-        if (salonName.isEmpty() || description.isEmpty() || firstName.isEmpty() ||
-            lastName.isEmpty() || email.isEmpty() || phone.isEmpty() ||
+        // 2. 📌 VALIDATION
+        if (salonName.isEmpty() || description.isEmpty() || phone.isEmpty() ||
             street.isEmpty() || city.isEmpty() || country.isEmpty()
         ) {
-
             Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
             return
         }
 
-        // 2. 📌 GENERATE UNIQUE SALON ID
-        val salonId = salonRef.push().key!!
+        // 3. 📌 GENERATE UNIQUE SALON ID
+        val salonId = salonRef.push().key ?: return
 
         // 4. 📌 WORKING HOURS DATA
-        // Note: Accessing switches by hierarchy as they don't have IDs in XML
         val workingHours = HashMap<String, String>()
         val dayMap = mapOf(
             "Mon" to R.id.tvMon, "Tue" to R.id.tvTue, "Wed" to R.id.tvWed,
@@ -133,37 +168,43 @@ class AddSalonActivity : AppCompatActivity() {
             val parent = tvDay.parent as RelativeLayout
             val tvTime = parent.getChildAt(1) as TextView
             val sw = parent.getChildAt(2) as SwitchMaterial
-
             workingHours[day] = if (sw.isChecked) tvTime.text.toString() else "Closed"
         }
 
-        // 6. 📌 SAVE DATA TO FIREBASE (Prepare HashMap)
+        // 5. 📌 PREPARE SALON DATA
         val salonData = HashMap<String, Any>()
         salonData["salonId"] = salonId
+        salonData["ownerId"] = userId ?: ""
+        salonData["ownerName"] = ownerName
         salonData["salonName"] = salonName
         salonData["description"] = description
         salonData["category"] = category
-        salonData["ownerFirstName"] = firstName
-        salonData["ownerLastName"] = lastName
-        salonData["email"] = email
         salonData["phone"] = phone
-        salonData["street"] = street
-        salonData["city"] = city
-        salonData["state"] = state
-        salonData["zip"] = zip
-        salonData["country"] = country
-        salonData["workingHours"] = workingHours
-        salonData["createdAt"] = System.currentTimeMillis()
+        
+        // Address Object
+        val addressMap = HashMap<String, String>()
+        addressMap["street"] = street
+        addressMap["city"] = city
+        addressMap["state"] = state
+        addressMap["zip"] = zip
+        addressMap["country"] = country
+        salonData["address"] = addressMap
 
-        // 7. 📌 INSERT INTO DATABASE
+        salonData["workingHours"] = workingHours
+        salonData["status"] = "pending"
+        salonData["createdAt"] = System.currentTimeMillis()
+        
+        // Placeholder for missing UI fields as per requirements
+        salonData["commission"] = "10%" 
+        salonData["payout"] = "UPI"
+
+        // 6. 📌 SAVE TO FIREBASE: Salons → salonId
         salonRef.child(salonId).setValue(salonData)
             .addOnSuccessListener {
-                // 8. 📌 SUCCESS HANDLING
-                Toast.makeText(this, "Salon Registered Successfully", Toast.LENGTH_SHORT).show()
-                finish()
+                Toast.makeText(this, "Waiting for Admin Approval", Toast.LENGTH_LONG).show()
+                finish() // Go back or to dashboard
             }
             .addOnFailureListener { e ->
-                // 9. 📌 ERROR HANDLING
                 Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }

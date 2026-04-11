@@ -96,14 +96,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:background="@drawable/bg_white_rounded_12"
-                android:backgroundTint="#1A1A1A"
+                android:background="@drawable/bg_chip_selector"
                 android:paddingHorizontal="20dp"
                 android:paddingVertical="10dp"
                 android:text="All"
-                android:textColor="#FFFFFF"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textColor="@color/chip_text_selector"
+                android:textSize="14sp" />
 
             <!-- Active Filter -->
             <TextView
@@ -111,12 +109,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:background="@drawable/bg_white_rounded_12"
-                android:backgroundTint="#FFFFFF"
+                android:background="@drawable/bg_chip_selector"
                 android:paddingHorizontal="20dp"
                 android:paddingVertical="10dp"
                 android:text="Active"
-                android:textColor="#8E8E8E"
+                android:textColor="@color/chip_text_selector"
                 android:textSize="14sp" />
 
             <!-- Pending Filter -->
@@ -125,12 +122,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:background="@drawable/bg_white_rounded_12"
-                android:backgroundTint="#FFFFFF"
+                android:background="@drawable/bg_chip_selector"
                 android:paddingHorizontal="20dp"
                 android:paddingVertical="10dp"
                 android:text="Pending"
-                android:textColor="#8E8E8E"
+                android:textColor="@color/chip_text_selector"
                 android:textSize="14sp" />
 
             <!-- Suspended Filter -->
@@ -138,12 +134,11 @@
                 android:id="@+id/filter_suspended"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_white_rounded_12"
-                android:backgroundTint="#FFFFFF"
+                android:background="@drawable/bg_chip_selector"
                 android:paddingHorizontal="20dp"
                 android:paddingVertical="10dp"
                 android:text="Suspended"
-                android:textColor="#8E8E8E"
+                android:textColor="@color/chip_text_selector"
                 android:textSize="14sp" />
         </LinearLayout>
     </HorizontalScrollView>

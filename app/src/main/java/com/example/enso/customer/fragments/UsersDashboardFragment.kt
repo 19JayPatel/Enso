@@ -2,6 +2,7 @@ package com.example.enso.customer.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,8 +55,10 @@ class UsersDashboardFragment : Fragment() {
 
                 for (userSnap in snapshot.children) {
                     val role = userSnap.child("role").value.toString()
+                    Log.d("USER_DEBUG", "Role: $role")
                     
-                    if (role == "customer" || role == "owner") {
+                    // ✅ Show ALL users (Force show both types)
+                    if (role == "customer" || role == "salon_owner" || role == "owner") {
                         val name = userSnap.child("name").value.toString()
                         val email = userSnap.child("email").value.toString()
                         val status = userSnap.child("status").value.toString()
@@ -65,8 +68,8 @@ class UsersDashboardFragment : Fragment() {
                         val itemBinding = ItemUserBinding.inflate(layoutInflater, binding.llUserList, false)
                         
                         // Set data
-                        val formattedRole = role.replaceFirstChar { it.uppercase() }
-                        itemBinding.tvName.text = "$name ($formattedRole)"
+                        val displayRole = if (role == "salon_owner" || role == "owner") "Salon Owner" else "Customer"
+                        itemBinding.tvName.text = "$name ($displayRole)"
                         itemBinding.tvEmail.text = email
                         itemBinding.tvStatus.text = status
                         
@@ -94,10 +97,10 @@ class UsersDashboardFragment : Fragment() {
 
                         // Update summary counters
                         total++
-                        when (status) {
-                            "Active" -> active++
-                            "Inactive" -> inactive++
-                            "Banned" -> banned++
+                        when (status.lowercase()) {
+                            "active" -> active++
+                            "inactive" -> inactive++
+                            "banned" -> banned++
                         }
                     }
                 }

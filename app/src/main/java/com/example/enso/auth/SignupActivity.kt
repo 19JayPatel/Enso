@@ -10,14 +10,14 @@ import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.EditText
-import android.widget.RadioGroup
+import android.widget.RadioButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.toColorInt
 import com.example.enso.R
+import com.example.enso.admin.AddSalonActivity
 import com.example.enso.customer.activities.MainActivity
-import com.example.enso.owner.SalonOwnerMainActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -33,89 +33,86 @@ class SignupActivity : AppCompatActivity() {
 
         // Initialize Firebase
         auth = FirebaseAuth.getInstance()
-        // Reference to "Users" node in Realtime Database
         database = FirebaseDatabase.getInstance().getReference("Users")
 
         // Get Views
         val etName = findViewById<EditText>(R.id.etName)
         val etEmail = findViewById<EditText>(R.id.etEmail)
         val etPassword = findViewById<EditText>(R.id.etPassword)
-        val rgUserRole = findViewById<RadioGroup>(R.id.rgUserRole)
+        val rbCustomer = findViewById<RadioButton>(R.id.rbCustomer)
+        val rbOwner = findViewById<RadioButton>(R.id.rbOwner)
         val btnContinue = findViewById<View>(R.id.btnContinue)
 
         btnContinue.setOnClickListener {
             val name = etName.text.toString().trim()
             val email = etEmail.text.toString().trim()
             val password = etPassword.text.toString().trim()
-            val selectedRoleId = rgUserRole.checkedRadioButtonId
 
-            // 1. Validation: Check if fields are empty
+            // STEP 1: GET SELECTED ROLE
+            val role = when {
+                rbCustomer.isChecked -> "customer"
+                rbOwner.isChecked -> "salon_owner"
+                else -> ""
+            }
+
+            // STEP 2: VALIDATION
             if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            // 2. Create User in Firebase Authentication
+            if (role.isEmpty()) {
+                Toast.makeText(this, "Please select role", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            // STEP 3: FIREBASE AUTH
             auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
+                        val userId = auth.currentUser?.uid ?: return@addOnCompleteListener
 
-                        val userId = auth.currentUser!!.uid
+                        // STEP 4: SAVE USER DATA
+                        val userMap = HashMap<String, Any>()
+                        userMap["name"] = name
+                        userMap["email"] = email
+                        userMap["role"] = role
+                        userMap["status"] = "active"
+                        userMap["phone"] = ""
+                        userMap["dob"] = ""
+                        userMap["gender"] = ""
+                        userMap["location"] = ""
+                        userMap["createdAt"] = System.currentTimeMillis()
 
-                        // Determine role and status
-                        val role = if (selectedRoleId == R.id.rbCustomer) "customer" else "owner"
-                        val status = if (role == "customer") "active" else "pending"
-
-                        // Prepare User Data (🔥 Added default fields for Edit Profile)
-                        val userObject = HashMap<String, Any>()
-                        userObject["name"] = name
-                        userObject["email"] = email
-                        userObject["role"] = role
-                        userObject["status"] = status
-                        userObject["phone"] = ""
-                        userObject["dob"] = ""
-                        userObject["gender"] = ""
-                        userObject["location"] = ""
-                        userObject["createdAt"] = System.currentTimeMillis()
-
-                        // 3. Save user data in Realtime Database
-                        database.child(userId).setValue(userObject)
+                        database.child(userId).setValue(userMap)
                             .addOnCompleteListener { dbTask ->
                                 if (dbTask.isSuccessful) {
+                                    Toast.makeText(this, "Signup Successful", Toast.LENGTH_SHORT).show()
 
-                                    if (role == "customer") {
-                                        // Navigate to MainActivity for customers
-                                        val intent = Intent(this, MainActivity::class.java)
+                                    // STEP 5: REDIRECT BASED ON ROLE
+                                    if (role == "salon_owner") {
+                                        // Owner → Add Salon Flow
+                                        val intent = Intent(this, AddSalonActivity::class.java)
+                                        intent.putExtra("userId", userId)
                                         startActivity(intent)
                                         finish()
                                     } else {
-                                        // Navigate to Log in for owners (waiting for approval)
-                                        Toast.makeText(
-                                            this,
-                                            "Waiting for admin approval",
-                                            Toast.LENGTH_LONG
-                                        ).show()
-                                        val intent = Intent(this, LoginActivity::class.java)
+                                        // Customer → Main App
+                                        val intent = Intent(this, MainActivity::class.java)
                                         startActivity(intent)
                                         finish()
                                     }
                                 } else {
-                                    Toast.makeText(
-                                        this,
-                                        "Database Error: ${dbTask.exception?.message}",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                                    Toast.makeText(this, "Database Error: ${dbTask.exception?.message}", Toast.LENGTH_SHORT).show()
                                 }
                             }
-
                     } else {
-                        // Show error message if task fails
+                        // STEP 6: ERROR HANDLING
                         Toast.makeText(this, task.exception?.message, Toast.LENGTH_SHORT).show()
                     }
                 }
         }
 
-        // Setup "Sign In" link redirect
         setupLoginRedirect()
     }
 
