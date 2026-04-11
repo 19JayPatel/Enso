@@ -52,22 +52,28 @@
 
             <TextView
                 android:id="@+id/tvSalonName"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
+                android:layout_marginEnd="8dp"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:text="Hair Avenue"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/tvOpenBadge"
                 app:layout_constraintStart_toEndOf="@+id/cvSalonLogo"
                 app:layout_constraintTop_toTopOf="@+id/cvSalonLogo" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
+                android:layout_marginEnd="8dp"
                 android:gravity="center_vertical"
                 app:layout_constraintBottom_toBottomOf="@+id/cvSalonLogo"
+                app:layout_constraintEnd_toStartOf="@+id/tvOpenBadge"
                 app:layout_constraintStart_toEndOf="@+id/cvSalonLogo"
                 app:layout_constraintTop_toBottomOf="@+id/tvSalonName">
 
@@ -78,9 +84,12 @@
                     app:tint="#E0E0E0" />
 
                 <TextView
+                    android:id="@+id/tvLocation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:text="Lakewood, California"
                     android:textColor="#E0E0E0"
                     android:textSize="12sp" />
@@ -92,6 +101,8 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_status_open"
                 android:drawablePadding="6dp"
+                android:gravity="center"
+                android:includeFontPadding="false"
                 android:paddingHorizontal="12dp"
                 android:paddingVertical="4dp"
                 android:text="Open"
