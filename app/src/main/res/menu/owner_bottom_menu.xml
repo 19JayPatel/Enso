@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/ic_home_selector"
+        android:title="Home" />
+
+    <item
+        android:id="@+id/nav_services"
+        android:icon="@drawable/scissorsandcomb"
+        android:title="Services" />
+
+    <item
+        android:id="@+id/nav_bookings"
+        android:icon="@drawable/ic_calendar_selector"
+        android:title="Bookings" />
+
+    <item
+        android:id="@+id/nav_profile"
+        android:icon="@drawable/ic_profile_selector"
+        android:title="Profile" />
+
+</menu>

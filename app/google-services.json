@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "779050962243",
+    "project_id": "ensoapp-36e5a",
+    "storage_bucket": "ensoapp-36e5a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:779050962243:android:67f9f32779ac2c5da033f6",
+        "android_client_info": {
+          "package_name": "com.example.enso"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-DTpWKceiC5R0o1AjDlbY17lY1-lxoJQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
