@@ -454,11 +454,11 @@ Run → Select Device → ▶ Run 'app'
 
 | Splash Screen | Login | Home |
 |---------------|--------|-------|
-| <img src="screenshots/customer/splash.png" width="220"/> | <img src="screenshots/customer/login.png" width="220"/> | <img src="screenshots/customer/home.png" width="220"/> |
+| <img src="screenshots/customer/splash.jpg" width="220"/> | <img src="screenshots/customer/loginscreen.jpg" width="220"/> | <img src="screenshots/customer/userhome.jpg" width="220"/> |
 
 | Salon Details | Booking | Receipt |
 |---------------|----------|----------|
-| <img src="screenshots/customer/salon_details.png" width="220"/> | <img src="screenshots/customer/booking.png" width="220"/> | <img src="screenshots/customer/receipt.png" width="220"/> |
+| <img src="screenshots/customer/salondetails.jpg" width="220"/> | <img src="screenshots/customer/confirmbooking.jpg" width="220"/> | <img src="screenshots/customer/Receipt.jpg" width="220"/> |
 
 ---
 
@@ -466,7 +466,7 @@ Run → Select Device → ▶ Run 'app'
 
 | Dashboard | Services | Bookings |
 |------------|-----------|-----------|
-| <img src="screenshots/owner/dashboard.png" width="220"/> | <img src="screenshots/owner/services.png" width="220"/> | <img src="screenshots/owner/bookings.png" width="220"/> |
+| <img src="screenshots/owner/salonownerdashboard.jpg" width="220"/> | <img src="screenshots/owner/salonservives.jpg" width="220"/> | <img src="screenshots/owner/salonupcomingbooking.jpg" width="220"/> |
 
 ---
 
@@ -474,7 +474,7 @@ Run → Select Device → ▶ Run 'app'
 
 | Dashboard | Salon Management | User Management |
 |------------|------------------|------------------|
-| <img src="screenshots/admin/dashboard.png" width="220"/> | <img src="screenshots/admin/salons.png" width="220"/> | <img src="screenshots/admin/users.png" width="220"/> |
+| <img src="screenshots/admin/admindashboard.jpg" width="220"/> | <img src="screenshots/admin/adminsalon.jpg" width="220"/> | <img src="screenshots/admin/adminusers.jpg" width="220"/> |
 
 </div>
 
