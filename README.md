@@ -23,6 +23,16 @@
 
 </div>
 
+--- 
+
+## 📥 Download APK
+
+<div align="center">
+
+[![Download APK](https://img.shields.io/badge/Download-APK-success?style=for-the-badge&logo=android)](https://github.com/19JayPatel/Enso/releases/latest)
+
+</div>
+
 ---
 
 ## 📖 Project Overview
