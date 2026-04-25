@@ -245,10 +245,6 @@ class AddSalonActivity : AppCompatActivity() {
                     salonRef.child(finalSalonId).setValue(salonData).addOnSuccessListener {
                         userRef.child(userId!!).child("salonId").setValue(finalSalonId)
 
-                        // Also save to SalonWorkingHours node for fast fetching
-                        FirebaseDatabase.getInstance().getReference("SalonWorkingHours")
-                            .child(userId!!).setValue(workingHoursMap)
-
                         Toast.makeText(this, "Waiting for Admin Approval", Toast.LENGTH_LONG).show()
                         finish()
                     }

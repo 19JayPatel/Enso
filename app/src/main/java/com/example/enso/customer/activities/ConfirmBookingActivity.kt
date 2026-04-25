@@ -11,7 +11,10 @@ import com.example.enso.customer.models.BookingModel
 import com.example.enso.customer.BookingSessionManager
 import com.example.enso.databinding.ActivityConfirmBookingBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class ConfirmBookingActivity : AppCompatActivity() {
 
@@ -91,13 +94,50 @@ class ConfirmBookingActivity : AppCompatActivity() {
         }
 
         binding.btnConfirm.setOnClickListener {
-            saveBookingToFirebase()
+            checkSlotAvailabilityAndBook()
         }
     }
 
     /**
-     * FIX: Save booking using the required structure and IDs.
+     * FIX: Check slot conflict before booking.
      */
+    private fun checkSlotAvailabilityAndBook() {
+        val salonId = BookingSessionManager.salonId
+        val bookingDate = BookingSessionManager.bookingDate
+        val bookingTime = BookingSessionManager.bookingTime
+
+        val databaseReference = FirebaseDatabase.getInstance().getReference("Bookings")
+
+        // Search for existing bookings with same salon, date and time
+        databaseReference.orderByChild("salonId").equalTo(salonId)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    var isSlotTaken = false
+
+                    for (bookingSnap in snapshot.children) {
+                        val existingDate = bookingSnap.child("bookingDate").getValue(String::class.java)
+                        val existingTime = bookingSnap.child("bookingTime").getValue(String::class.java)
+                        val existingStatus = bookingSnap.child("status").getValue(String::class.java)
+
+                        if (existingDate == bookingDate && existingTime == bookingTime && existingStatus != "cancelled") {
+                            isSlotTaken = true
+                            break
+                        }
+                    }
+
+                    if (isSlotTaken) {
+                        Toast.makeText(this@ConfirmBookingActivity, "This time slot is already booked", Toast.LENGTH_LONG).show()
+                    } else {
+                        saveBookingToFirebase()
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(this@ConfirmBookingActivity, "Validation Error: ${error.message}", Toast.LENGTH_SHORT).show()
+                }
+            })
+    }
+
     private fun saveBookingToFirebase() {
         val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
 
@@ -111,7 +151,6 @@ class ConfirmBookingActivity : AppCompatActivity() {
         val databaseReference = FirebaseDatabase.getInstance().getReference("Bookings")
         val bookingId = databaseReference.push().key ?: return
 
-        // Collect data from SessionManager
         val customerName = BookingSessionManager.customerName
         val salonId = BookingSessionManager.salonId
         val ownerId = BookingSessionManager.ownerId
@@ -119,7 +158,6 @@ class ConfirmBookingActivity : AppCompatActivity() {
         val bookingDate = BookingSessionManager.bookingDate
         val bookingTime = BookingSessionManager.bookingTime
         
-        // Handle services (using first one for ID/Name as per model or comma separated)
         val selectedServices = BookingSessionManager.selectedServices
         val serviceId = selectedServices.firstOrNull()?.serviceId ?: ""
         val serviceName = selectedServices.joinToString(", ") { it.serviceName ?: "" }
@@ -148,9 +186,6 @@ class ConfirmBookingActivity : AppCompatActivity() {
             .addOnSuccessListener {
                 bookingConfirmed = true
                 Toast.makeText(this, "Booking Confirmed!", Toast.LENGTH_SHORT).show()
-
-                // Unlock slot as it's now officially booked (or slot management logic)
-                // BookingSessionManager.reset() // Reset after flow
                 
                 val intent = Intent(this, MainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
