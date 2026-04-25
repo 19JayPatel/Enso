@@ -446,6 +446,11 @@ Run → Select Device → ▶ Run 'app'
 
 ---
 
+📸 Screenshots
+
+---
+
+
 ## 🗺️ Future Roadmap
 
 | Feature | Priority | Description |
@@ -491,6 +496,13 @@ Please ensure your code follows the existing package and naming conventions.
       </a><br/>
       <sub>Creator & Lead Developer</sub>
     </td>
+    <td align="center">
+      <a href="https://github.com/nirbhayramani">
+        <img src="https://github.com/nirbhayramani.png" width="80px;" alt="Nirbhay Ramani"/><br />
+        <sub><b>Nirbhay Ramani</b></sub>
+      </a><br/>
+      <sub>Team Leader & Creator</sub>
+    </td>
   </tr>
 </table>
 
@@ -525,6 +537,11 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 **Jay Patel**
 
 [![GitHub](https://img.shields.io/badge/GitHub-19JayPatel-181717?style=flat-square&logo=github)](https://github.com/19JayPatel)
+
+**Nirbhay Ramani**
+
+[![GitHub](https://img.shields.io/badge/GitHub-nirbhayramani-181717?style=flat-square&logo=github)](https://github.com/nirbhayramani)
+
 
 > Have a feature request or found a bug? [Open an issue](https://github.com/19JayPatel/Enso/issues) on GitHub.
 
