@@ -1,4 +1,4 @@
-package com.example.enso.owner
+package com.example.enso.owner.fragments
 
 import android.app.AlertDialog
 import android.content.Intent
@@ -10,7 +10,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.enso.R
-import com.example.enso.admin.AddSalonActivity
+import com.example.enso.admin.activities.AddSalonActivity
 import com.example.enso.auth.LoginActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -101,7 +101,7 @@ class SalonOwnerProfileFragment : Fragment() {
 
                     // Redirect to LoginActivity
                     val intent = Intent(requireContext(), LoginActivity::class.java)
-                    
+
                     // Clear back stack so user cannot go back
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)

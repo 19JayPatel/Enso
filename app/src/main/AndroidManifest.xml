@@ -30,41 +30,41 @@
         </activity>
 
         <activity
-            android:name=".admin.AdminMainActivity"
+            android:name=".admin.activities.AdminMainActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
         <activity
-            android:name=".admin.AddSalonActivity"
+            android:name=".admin.activities.AddSalonActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <!-- Salon Owner Activities -->
         <activity
-            android:name=".owner.SalonOwnerMainActivity"
+            android:name=".owner.activities.SalonOwnerMainActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
         <!-- Navigation Flow Activities -->
         <activity
-            android:name=".owner.AddNewServiceActivity"
+            android:name=".owner.activities.AddNewServiceActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".owner.AddServicePricingActivity"
+            android:name=".owner.activities.AddServicePricingActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".owner.AddServiceReviewActivity"
+            android:name=".owner.activities.AddServiceReviewActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".owner.ServicePublishedActivity"
+            android:name=".owner.activities.ServicePublishedActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
 

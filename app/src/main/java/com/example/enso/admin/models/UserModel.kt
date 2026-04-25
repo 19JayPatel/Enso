@@ -1,4 +1,4 @@
-package com.example.enso.admin
+package com.example.enso.admin.models
 
 data class UserModel(
     var name: String = "",

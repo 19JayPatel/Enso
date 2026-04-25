@@ -1,4 +1,4 @@
-package com.example.enso.owner
+package com.example.enso.owner.models
 
 data class ServiceModel(
     var serviceId: String? = "",

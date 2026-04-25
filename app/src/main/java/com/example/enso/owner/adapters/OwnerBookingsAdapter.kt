@@ -1,4 +1,4 @@
-package com.example.enso.owner
+package com.example.enso.owner.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,7 +7,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.enso.R
-import com.example.enso.customer.BookingModel
+import com.example.enso.customer.models.BookingModel
 import com.google.firebase.database.FirebaseDatabase
 
 /**
@@ -41,7 +41,7 @@ class OwnerBookingsAdapter(
         val booking = bookingList[position]
 
         holder.tvDateHeader.text = booking.bookingDate
-        
+
         // Use pre-saved customer name for better performance
         val name = booking.customerName.ifEmpty { "Customer" }
         holder.tvCustomerName.text = name

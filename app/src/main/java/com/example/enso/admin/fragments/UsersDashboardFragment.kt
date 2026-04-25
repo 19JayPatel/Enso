@@ -1,4 +1,4 @@
-package com.example.enso.admin
+package com.example.enso.admin.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -54,7 +54,7 @@ class UsersDashboardFragment : Fragment() {
             if (!userSnapshot.exists()) return@addOnSuccessListener
 
             bookingsRef.get().addOnSuccessListener { bookingSnapshot ->
-                
+
                 // STEP 1: Build Count Maps for both Customers and Owners
                 val customerBookingMap = HashMap<String, Int>()
                 val ownerBookingMap = HashMap<String, Int>()
@@ -100,7 +100,7 @@ class UsersDashboardFragment : Fragment() {
 
                         // Inflate and Bind
                         val itemBinding = ItemUserBinding.inflate(layoutInflater, binding.llUserList, false)
-                        
+
                         val displayRole = if (role == "customer") "Customer" else "Salon Owner"
                         itemBinding.tvName.text = "$name ($displayRole)"
                         itemBinding.tvEmail.text = email

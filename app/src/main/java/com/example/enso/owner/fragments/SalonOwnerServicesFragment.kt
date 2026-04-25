@@ -1,4 +1,4 @@
-package com.example.enso.owner
+package com.example.enso.owner.fragments
 
 import android.content.Intent
 import android.graphics.Color
@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.enso.R
 import com.example.enso.auth.LoginActivity
+import com.example.enso.owner.activities.AddNewServiceActivity
+import com.example.enso.owner.models.ServiceModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 

@@ -1,4 +1,4 @@
-package com.example.enso.owner
+package com.example.enso.owner.adapters
 
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.enso.R
-import com.example.enso.customer.BookingModel
+import com.example.enso.customer.models.BookingModel
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -56,7 +56,7 @@ class UpcomingAppointmentAdapter(
 
         // FIX: Use customerId instead of userId
         holder.tvName.text = appointment.customerName.ifEmpty { "Loading..." }
-        
+
         if (appointment.customerName.isEmpty()) {
             FirebaseDatabase.getInstance().reference
                 .child("Users")
@@ -77,7 +77,7 @@ class UpcomingAppointmentAdapter(
         } else {
             holder.tvInitials.text = appointment.customerName.take(1).uppercase()
         }
-        
+
         // FIX: Use serviceName and price from BookingModel
         holder.tvService.text = appointment.serviceName
         holder.tvPrice.text = "₹${appointment.price}"
@@ -94,7 +94,7 @@ class UpcomingAppointmentAdapter(
             holder.tvStatus.setTextColor(Color.parseColor("#8E8E8E"))
             holder.cvStatus.setCardBackgroundColor(Color.parseColor("#EEEEEE"))
         }
-        
+
         val bgColors = listOf("#F4E8E1", "#E7F3FD", "#E7FDF0")
         val textColors = listOf("#A46C54", "#1976D2", "#2E7D32")
         val colorIndex = position % bgColors.size

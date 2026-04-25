@@ -1,7 +1,14 @@
-package com.example.enso.admin
+package com.example.enso.admin.activities
 
 import android.os.Bundle
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
+import android.widget.Spinner
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import com.example.enso.R
@@ -171,7 +178,7 @@ class AddSalonActivity : AppCompatActivity() {
         val description = etDescription.text.toString().trim()
         val category = spinnerCategory.selectedItem.toString()
         val phone = etPhone.text.toString().trim()
-        
+
         val street = etStreet.text.toString().trim()
         val cityStr = etCity.text.toString().trim()
         val stateStr = etState.text.toString().trim()
@@ -196,7 +203,7 @@ class AddSalonActivity : AppCompatActivity() {
         salonData["description"] = description
         salonData["category"] = category
         salonData["phone"] = phone
-        
+
         val addressMap = HashMap<String, String>()
         addressMap["street"] = street
         addressMap["city"] = cityStr
@@ -215,7 +222,7 @@ class AddSalonActivity : AppCompatActivity() {
             val parent = tvDay.parent as RelativeLayout
             val timeText = (parent.getChildAt(1) as TextView).text.toString()
             val switch = parent.getChildAt(2) as SwitchMaterial
-            
+
             workingHoursMap[days[i]] = if (switch.isChecked) timeText else "Closed"
         }
         salonData["workingHours"] = workingHoursMap
@@ -232,12 +239,12 @@ class AddSalonActivity : AppCompatActivity() {
                 } else {
                     salonData["status"] = "pending"
                     salonData["createdAt"] = System.currentTimeMillis()
-                    salonData["commission"] = "10%" 
+                    salonData["commission"] = "10%"
                     salonData["payout"] = "UPI"
 
                     salonRef.child(finalSalonId).setValue(salonData).addOnSuccessListener {
                         userRef.child(userId!!).child("salonId").setValue(finalSalonId)
-                        
+
                         // Also save to SalonWorkingHours node for fast fetching
                         FirebaseDatabase.getInstance().getReference("SalonWorkingHours")
                             .child(userId!!).setValue(workingHoursMap)

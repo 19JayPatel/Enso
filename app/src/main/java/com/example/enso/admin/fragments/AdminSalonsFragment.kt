@@ -1,4 +1,4 @@
-package com.example.enso.admin
+package com.example.enso.admin.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,7 +10,14 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.enso.R
-import com.google.firebase.database.*
+import com.example.enso.admin.adapters.SalonAdapter
+import com.example.enso.admin.models.SalonModel
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import kotlin.collections.iterator
 
 class AdminSalonsFragment : Fragment() {
 

@@ -1,6 +1,6 @@
 package com.example.enso.customer
 
-import com.example.enso.owner.ServiceModel
+import com.example.enso.owner.models.ServiceModel
 
 /**
  * Singleton object to manage booking session data temporarily.

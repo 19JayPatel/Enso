@@ -1,4 +1,4 @@
-package com.example.enso.owner
+package com.example.enso.owner.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,7 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.enso.R
 import com.example.enso.auth.LoginActivity
-import com.example.enso.customer.BookingModel
+import com.example.enso.customer.models.BookingModel
+import com.example.enso.owner.adapters.UpcomingAppointmentAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -87,7 +88,8 @@ class SalonOwnerDashboardFragment : Fragment() {
         // WHAT: Fetch salonId from Firebase Users node
         // WHY: Dashboard bookings depend on salonId filtering.
         // HOW: Access path Users/{ownerId}/salonId in Realtime Database.
-        database.child("Users").child(ownerId).child("salonId").addListenerForSingleValueEvent(object : ValueEventListener {
+        database.child("Users").child(ownerId).child("salonId").addListenerForSingleValueEvent(object :
+            ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val ownerSalonId = snapshot.getValue(String::class.java)
                 if (ownerSalonId != null) {
@@ -107,7 +109,9 @@ class SalonOwnerDashboardFragment : Fragment() {
                             // WHAT: Filter bookings for current salon and today's date
                             // WHY: Dashboard must show only today's appointments for this salon owner.
                             // HOW: Iterate snapshot, check salonId and compare bookingDate with today's date.
-                            val todayDate = SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(Date())
+                            val todayDate = SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(
+                                Date()
+                            )
                             val filteredBookings = mutableListOf<BookingModel>()
 
                             for (bookingSnap in snapshot.children) {

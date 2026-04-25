@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FDFDFD"
-    tools:context=".owner.AddServicePricingActivity">
+    tools:context=".owner.activities.AddServicePricingActivity">
 
     <!-- TOP BAR -->
     <androidx.constraintlayout.widget.ConstraintLayout

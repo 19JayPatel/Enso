@@ -7,7 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.enso.R
 import com.example.enso.auth.LoginActivity
-import com.example.enso.customer.BookingModel
+import com.example.enso.customer.models.BookingModel
 import com.example.enso.customer.BookingSessionManager
 import com.example.enso.databinding.ActivityConfirmBookingBinding
 import com.google.firebase.auth.FirebaseAuth

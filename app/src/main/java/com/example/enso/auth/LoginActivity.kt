@@ -16,9 +16,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.toColorInt
 import com.example.enso.customer.activities.MainActivity
 import com.example.enso.R
-import com.example.enso.admin.AddSalonActivity
-import com.example.enso.admin.AdminMainActivity
-import com.example.enso.owner.SalonOwnerMainActivity
+import com.example.enso.admin.activities.AddSalonActivity
+import com.example.enso.admin.activities.AdminMainActivity
+import com.example.enso.owner.activities.SalonOwnerMainActivity
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase

@@ -1,13 +1,18 @@
-package com.example.enso.admin
+package com.example.enso.admin.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import com.example.enso.databinding.FragmentAdminDashboardScreenBinding
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -28,7 +33,7 @@ class AdminDashboardFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        
+
         updateDate()
         fetchBookingStats()
         fetchSalonsAndUsersCount()
@@ -57,8 +62,8 @@ class AdminDashboardFragment : Fragment() {
 
                 if (_binding != null) {
                     // Total Bookings is the first card in GridLayout (index 0)
-                    val card = binding.statsGrid.getChildAt(0) as? androidx.cardview.widget.CardView
-                    val layout = card?.getChildAt(0) as? android.widget.LinearLayout
+                    val card = binding.statsGrid.getChildAt(0) as? CardView
+                    val layout = card?.getChildAt(0) as? LinearLayout
                     val tvCount = layout?.getChildAt(1) as? TextView
                     tvCount?.text = total.toString()
                 }
@@ -70,11 +75,12 @@ class AdminDashboardFragment : Fragment() {
 
     private fun fetchSalonsAndUsersCount() {
         // Fetch Total Salons (index 1 in GridLayout)
-        FirebaseDatabase.getInstance().getReference("Salons").addValueEventListener(object : ValueEventListener {
+        FirebaseDatabase.getInstance().getReference("Salons").addValueEventListener(object :
+            ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (_binding != null) {
-                    val card = binding.statsGrid.getChildAt(1) as? androidx.cardview.widget.CardView
-                    val layout = card?.getChildAt(0) as? android.widget.LinearLayout
+                    val card = binding.statsGrid.getChildAt(1) as? CardView
+                    val layout = card?.getChildAt(0) as? LinearLayout
                     val tvCount = layout?.getChildAt(1) as? TextView
                     tvCount?.text = snapshot.childrenCount.toString()
                 }
@@ -83,11 +89,12 @@ class AdminDashboardFragment : Fragment() {
         })
 
         // Fetch Total Users (index 2 in GridLayout)
-        FirebaseDatabase.getInstance().getReference("Users").addValueEventListener(object : ValueEventListener {
+        FirebaseDatabase.getInstance().getReference("Users").addValueEventListener(object :
+            ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (_binding != null) {
-                    val card = binding.statsGrid.getChildAt(2) as? androidx.cardview.widget.CardView
-                    val layout = card?.getChildAt(0) as? android.widget.LinearLayout
+                    val card = binding.statsGrid.getChildAt(2) as? CardView
+                    val layout = card?.getChildAt(0) as? LinearLayout
                     val tvCount = layout?.getChildAt(1) as? TextView
                     tvCount?.text = snapshot.childrenCount.toString()
                 }

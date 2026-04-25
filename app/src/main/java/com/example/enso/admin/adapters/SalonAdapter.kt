@@ -1,4 +1,4 @@
-package com.example.enso.admin
+package com.example.enso.admin.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.enso.R
+import com.example.enso.admin.models.SalonModel
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -66,7 +67,8 @@ class SalonAdapter(private var salonList: MutableList<SalonModel>) :
             holder.tvOwnerName.text = "Owner: " + salon.ownerName
         }
 
-        holder.tvStatus.text = salon.status.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
+        holder.tvStatus.text = salon.status.replaceFirstChar { if (it.isLowerCase()) it.titlecase(
+            Locale.getDefault()) else it.toString() }
 
         // Use the getInitials logic
         holder.tvInitials.text = getInitials(salon.salonName).uppercase()
@@ -108,7 +110,7 @@ class SalonAdapter(private var salonList: MutableList<SalonModel>) :
             val db = FirebaseDatabase.getInstance()
             db.getReference("Salons").child(currentSalon.salonId).child("status").setValue("active")
             db.getReference("Users").child(currentSalon.ownerId).child("status").setValue("active")
-            
+
             // BUG 1 FIX: Update local data and refresh item immediately
             currentSalon.status = "active"
             notifyItemChanged(currentPos)
@@ -122,7 +124,7 @@ class SalonAdapter(private var salonList: MutableList<SalonModel>) :
             val db = FirebaseDatabase.getInstance()
             db.getReference("Salons").child(currentSalon.salonId).removeValue()
             db.getReference("Users").child(currentSalon.ownerId).removeValue()
-            
+
             // BUG 1 FIX: Remove from local list and refresh
             salonList.removeAt(currentPos)
             notifyItemRemoved(currentPos)
@@ -136,7 +138,7 @@ class SalonAdapter(private var salonList: MutableList<SalonModel>) :
 
             FirebaseDatabase.getInstance().getReference("Salons")
                 .child(currentSalon.salonId).child("status").setValue("suspended")
-            
+
             // BUG 1 FIX: Update local data and refresh item immediately
             currentSalon.status = "suspended"
             notifyItemChanged(currentPos)
@@ -149,7 +151,7 @@ class SalonAdapter(private var salonList: MutableList<SalonModel>) :
 
             FirebaseDatabase.getInstance().getReference("Salons")
                 .child(currentSalon.salonId).child("status").setValue("active")
-            
+
             // BUG 1 FIX: Update local data and refresh item immediately
             currentSalon.status = "active"
             notifyItemChanged(currentPos)

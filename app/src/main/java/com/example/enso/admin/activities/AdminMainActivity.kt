@@ -1,10 +1,16 @@
-package com.example.enso.admin
+package com.example.enso.admin.activities
 
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.enso.R
-import com.example.enso.admin.UsersDashboardFragment
+import com.example.enso.admin.fragments.AdminDashboardFragment
+import com.example.enso.admin.fragments.AdminProfileFragment
+import com.example.enso.admin.fragments.AdminSalonsFragment
+import com.example.enso.admin.fragments.UsersDashboardFragment
 import com.example.enso.databinding.ActivityAdminMainBinding
 
 class AdminMainActivity : AppCompatActivity() {
@@ -40,14 +46,14 @@ class AdminMainActivity : AppCompatActivity() {
 class PlaceholderFragment(private val title: String) : Fragment() {
     // Basic placeholder fragment for non-implemented tabs
     override fun onCreateView(
-        inflater: android.view.LayoutInflater,
-        container: android.view.ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): android.view.View? {
-        val view = android.view.View(context)
-        view.layoutParams = android.view.ViewGroup.LayoutParams(
-            android.view.ViewGroup.LayoutParams.MATCH_PARENT,
-            android.view.ViewGroup.LayoutParams.MATCH_PARENT
+    ): View? {
+        val view = View(context)
+        view.layoutParams = ViewGroup.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT
         )
         return view
     }

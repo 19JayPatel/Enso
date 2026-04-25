@@ -1,13 +1,15 @@
-package com.example.enso.owner
+package com.example.enso.owner.activities
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.enso.R
+import com.example.enso.owner.activities.AddServiceReviewActivity
 
 class AddServicePricingActivity : AppCompatActivity() {
 
@@ -27,7 +29,7 @@ class AddServicePricingActivity : AppCompatActivity() {
         // Initialize Views
         etPrice = findViewById(R.id.etPrice)
         etCustomDuration = findViewById(R.id.etCustomDuration)
-        val btnBackHeader = findViewById<android.widget.ImageView>(R.id.btnBackHeader)
+        val btnBackHeader = findViewById<ImageView>(R.id.btnBackHeader)
         val btnBack = findViewById<TextView>(R.id.btnBack)
         val btnNext = findViewById<TextView>(R.id.btnNext)
 

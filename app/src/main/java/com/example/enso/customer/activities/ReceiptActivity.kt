@@ -4,7 +4,7 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.enso.customer.BookingModel
+import com.example.enso.customer.models.BookingModel
 import com.example.enso.databinding.ActivityReceiptBinding
 import com.google.firebase.database.*
 import com.google.zxing.BarcodeFormat

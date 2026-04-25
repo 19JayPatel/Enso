@@ -16,7 +16,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.toColorInt
 import com.example.enso.R
-import com.example.enso.admin.AddSalonActivity
+import com.example.enso.admin.activities.AddSalonActivity
 import com.example.enso.customer.activities.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference

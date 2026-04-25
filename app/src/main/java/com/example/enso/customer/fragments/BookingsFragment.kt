@@ -16,7 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.enso.R
-import com.example.enso.customer.BookingModel
+import com.example.enso.customer.models.BookingModel
 import com.example.enso.customer.activities.MainActivity
 import com.example.enso.customer.activities.ReceiptActivity
 import com.example.enso.customer.adapters.CustomerBookingsAdapter

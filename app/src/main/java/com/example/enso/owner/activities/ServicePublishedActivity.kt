@@ -1,4 +1,4 @@
-package com.example.enso.owner
+package com.example.enso.owner.activities
 
 import android.content.Intent
 import android.os.Bundle

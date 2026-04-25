@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.enso.R
 import com.example.enso.customer.BookingSessionManager
 import com.example.enso.customer.activities.DateTimeActivity
-import com.example.enso.owner.ServiceModel
+import com.example.enso.owner.models.ServiceModel
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.checkbox.MaterialCheckBox

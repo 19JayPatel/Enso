@@ -1,7 +1,8 @@
-package com.example.enso.owner
+package com.example.enso.owner.fragments
 
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,9 +14,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.enso.R
 import com.example.enso.auth.LoginActivity
-import com.example.enso.customer.BookingModel
+import com.example.enso.customer.models.BookingModel
+import com.example.enso.owner.adapters.OwnerBookingsAdapter
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class SalonOwnerBookingsFragment : Fragment() {
 
@@ -87,7 +92,7 @@ class SalonOwnerBookingsFragment : Fragment() {
                 }
 
                 filterBookings(currentTab)
-                
+
                 highlightBookingId?.let { id ->
                     val index = allBookings.indexOfFirst { it.bookingId == id }
                     if (index != -1) {
@@ -112,9 +117,9 @@ class SalonOwnerBookingsFragment : Fragment() {
         tvUpcoming.setTextColor(gray)
         tvCompleted.setTextColor(gray)
         tvCancelled.setTextColor(gray)
-        tvUpcoming.setTypeface(null, android.graphics.Typeface.NORMAL)
-        tvCompleted.setTypeface(null, android.graphics.Typeface.NORMAL)
-        tvCancelled.setTypeface(null, android.graphics.Typeface.NORMAL)
+        tvUpcoming.setTypeface(null, Typeface.NORMAL)
+        tvCompleted.setTypeface(null, Typeface.NORMAL)
+        tvCancelled.setTypeface(null, Typeface.NORMAL)
         lineUpcoming.setBackgroundColor(Color.TRANSPARENT)
         lineCompleted.setBackgroundColor(Color.TRANSPARENT)
         lineCancelled.setBackgroundColor(Color.TRANSPARENT)
@@ -122,17 +127,17 @@ class SalonOwnerBookingsFragment : Fragment() {
         when (tab) {
             "Upcoming" -> {
                 tvUpcoming.setTextColor(brown)
-                tvUpcoming.setTypeface(null, android.graphics.Typeface.BOLD)
+                tvUpcoming.setTypeface(null, Typeface.BOLD)
                 lineUpcoming.setBackgroundColor(brown)
             }
             "Completed" -> {
                 tvCompleted.setTextColor(brown)
-                tvCompleted.setTypeface(null, android.graphics.Typeface.BOLD)
+                tvCompleted.setTypeface(null, Typeface.BOLD)
                 lineCompleted.setBackgroundColor(brown)
             }
             "Cancelled" -> {
                 tvCancelled.setTextColor(brown)
-                tvCancelled.setTypeface(null, android.graphics.Typeface.BOLD)
+                tvCancelled.setTypeface(null, Typeface.BOLD)
                 lineCancelled.setBackgroundColor(brown)
             }
         }

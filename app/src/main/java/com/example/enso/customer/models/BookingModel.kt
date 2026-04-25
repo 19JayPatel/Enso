@@ -1,4 +1,4 @@
-package com.example.enso.customer
+package com.example.enso.customer.models
 
 /**
  * Model class for Booking data to be saved in Firebase.

@@ -1,9 +1,13 @@
-package com.example.enso.owner
+package com.example.enso.owner.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.enso.R
+import com.example.enso.owner.fragments.SalonOwnerBookingsFragment
+import com.example.enso.owner.fragments.SalonOwnerDashboardFragment
+import com.example.enso.owner.fragments.SalonOwnerProfileFragment
+import com.example.enso.owner.fragments.SalonOwnerServicesFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 /**
@@ -32,7 +36,7 @@ class SalonOwnerMainActivity : AppCompatActivity() {
                 R.id.nav_profile -> SalonOwnerProfileFragment()
                 else -> SalonOwnerDashboardFragment()
             }
-            
+
             // Switch to the selected fragment
             loadFragment(selectedFragment)
             true

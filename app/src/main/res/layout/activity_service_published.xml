@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context=".owner.ServicePublishedActivity">
+    tools:context=".owner.activities.ServicePublishedActivity">
 
     <!-- SUCCESS HEADER SECTION -->
     <LinearLayout

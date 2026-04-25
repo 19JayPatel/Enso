@@ -1,4 +1,4 @@
-package com.example.enso.admin
+package com.example.enso.admin.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -49,7 +49,7 @@ class AdminProfileFragment : Fragment() {
                 // Get email and name fields from database
                 val email = snapshot.child("email").value.toString()
                 val name = snapshot.child("name").value.toString()
-                
+
                 // Set data into TextViews
                 binding.tvEmail.text = email
                 binding.tvName.text = name
