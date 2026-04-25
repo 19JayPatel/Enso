@@ -446,7 +446,37 @@ Run → Select Device → ▶ Run 'app'
 
 ---
 
-📸 Screenshots
+## 📸 Screenshots
+
+<div align="center">
+
+### Customer App Flow
+
+| Splash Screen | Login | Home |
+|---------------|--------|-------|
+| <img src="screenshots/customer/splash.png" width="220"/> | <img src="screenshots/customer/login.png" width="220"/> | <img src="screenshots/customer/home.png" width="220"/> |
+
+| Salon Details | Booking | Receipt |
+|---------------|----------|----------|
+| <img src="screenshots/customer/salon_details.png" width="220"/> | <img src="screenshots/customer/booking.png" width="220"/> | <img src="screenshots/customer/receipt.png" width="220"/> |
+
+---
+
+### Salon Owner Portal
+
+| Dashboard | Services | Bookings |
+|------------|-----------|-----------|
+| <img src="screenshots/owner/dashboard.png" width="220"/> | <img src="screenshots/owner/services.png" width="220"/> | <img src="screenshots/owner/bookings.png" width="220"/> |
+
+---
+
+### Admin Portal
+
+| Dashboard | Salon Management | User Management |
+|------------|------------------|------------------|
+| <img src="screenshots/admin/dashboard.png" width="220"/> | <img src="screenshots/admin/salons.png" width="220"/> | <img src="screenshots/admin/users.png" width="220"/> |
+
+</div>
 
 ---
 
