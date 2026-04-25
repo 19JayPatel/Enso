@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "971751788586",
+    "firebase_url": "https://enso-42d09-default-rtdb.firebaseio.com",
+    "project_id": "enso-42d09",
+    "storage_bucket": "enso-42d09.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:971751788586:android:f2d20050f40010d61ef353",
+        "android_client_info": {
+          "package_name": "com.example.enso"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "971751788586-5les61g8h5pska0393raufp62ccsirmg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCC_FDKwsVDRcRNdsnx4rk1mS_6EkxwyJc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "971751788586-5les61g8h5pska0393raufp62ccsirmg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
